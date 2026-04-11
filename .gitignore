@@ -1,0 +1,50 @@
+# ─── Entorno y Secretos ───────────────────────
+.env
+.env.local
+.env.*.local
+
+# ─── Python ──────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+*.whl
+
+# ─── Entornos Virtuales ───────────────────────
+.venv/
+venv/
+ENV/
+env/
+
+# ─── uv ──────────────────────────────────────
+.uv/
+
+# ─── Testing ─────────────────────────────────
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# ─── Linters / Type Checkers ─────────────────
+.mypy_cache/
+.ruff_cache/
+
+# ─── IDEs ────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# ─── Logs ────────────────────────────────────
+*.log
+logs/
+
+# ─── Alembic (no excluir la carpeta, solo los artefactos) ──
+alembic/__pycache__/

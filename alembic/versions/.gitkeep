@@ -1,0 +1,4 @@
+# Directorio vacío — Alembic almacena aquí los archivos de migración generados.
+# Los archivos .py de versiones son generados automáticamente por:
+#   alembic revision --autogenerate -m "descripcion"
+# NO eliminar este archivo — mantiene el directorio en Git.

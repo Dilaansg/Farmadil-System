@@ -29,6 +29,18 @@ dependencies = [
 
     # --- HTTP Client ---
     "httpx>=0.27.0",
+
+    # --- Data Processing (Invoices & Catalog) ---
+    "pandas>=2.2.0",
+    "openpyxl>=3.1.0",           # For pandas Excel support
+    "lxml>=5.1.0",               # For parsing UBL XML invoices
+
+    # --- Templating & Static Files ---
+    "jinja2>=3.1.0",
+    "aiofiles>=23.2.0",
+
+    # --- Extra DB Drivers ---
+    "aiosqlite>=0.20.0",         # Async SQLite support
 ]
 
 [project.optional-dependencies]

@@ -14,7 +14,7 @@ Uso:
 import json
 import logging
 import sys
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 
 from app.core.config import settings
 
@@ -24,7 +24,7 @@ class _JsonFormatter(logging.Formatter):
 
     def format(self, record: logging.LogRecord) -> str:
         log_entry: dict = {
-            "timestamp": datetime.now(UTC).isoformat(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
             "level": record.levelname,
             "logger": record.name,
             "message": record.getMessage(),
@@ -62,7 +62,7 @@ class _PrettyFormatter(logging.Formatter):
 
     def format(self, record: logging.LogRecord) -> str:
         color = self._COLORS.get(record.levelname, "")
-        timestamp = datetime.now(UTC).strftime("%Y-%m-%d %H:%M:%S")
+        timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
         return (
             f"{color}[{timestamp}] {record.levelname:<8}{self._RESET} "
             f"\033[90m{record.name}\033[0m — {record.getMessage()}"

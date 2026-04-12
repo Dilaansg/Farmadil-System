@@ -8,7 +8,7 @@ import hashlib
 import secrets
 import string
 import uuid
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 
 
 def generate_uuid() -> uuid.UUID:
@@ -18,7 +18,7 @@ def generate_uuid() -> uuid.UUID:
 
 def utcnow() -> datetime:
     """Retorna el timestamp actual en UTC (timezone-aware)."""
-    return datetime.now(UTC)
+    return datetime.now(timezone.utc)
 
 
 def generate_random_token(length: int = 32) -> str:

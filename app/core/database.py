@@ -8,6 +8,7 @@ Exporta:
     AsyncSessionLocal → async_sessionmaker
     create_db_tables()  → Crea tablas (solo para dev/testing)
 """
+from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlmodel import SQLModel
 
@@ -65,6 +66,7 @@ async def _migrate_product_columns() -> None:
     introspectando las columnas existentes primero.
     """
     NEW_COLUMNS = [
+        ("unidades_por_caja", "INTEGER NOT NULL DEFAULT 1"),
         ("registro_invima",  "TEXT"),
         ("principio_activo", "TEXT"),
         ("estado_invima",    "TEXT"),
@@ -73,14 +75,14 @@ async def _migrate_product_columns() -> None:
     async with engine.begin() as conn:
         # Obtener columnas existentes
         result = await conn.execute(
-            __import__("sqlalchemy").text("PRAGMA table_info(products)")
+            text("PRAGMA table_info(products)")
         )
         existing = {row[1] for row in result.fetchall()}
 
         for col_name, col_type in NEW_COLUMNS:
             if col_name not in existing:
                 await conn.execute(
-                    __import__("sqlalchemy").text(
+                    text(
                         f"ALTER TABLE products ADD COLUMN {col_name} {col_type}"
                     )
                 )

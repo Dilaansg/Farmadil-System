@@ -10,7 +10,7 @@ Funciones principales:
     create_refresh_token(data)  → str (JWT)
     decode_token(token)         → dict | None
 """
-from datetime import UTC, datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Any
 
 from jose import JWTError, jwt
@@ -36,8 +36,8 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 def _create_token(data: dict[str, Any], expires_delta: timedelta) -> str:
     """Base interna para crear tokens JWT."""
     payload = data.copy()
-    expire = datetime.now(UTC) + expires_delta
-    payload.update({"exp": expire, "iat": datetime.now(UTC)})
+    expire = datetime.now(timezone.utc) + expires_delta
+    payload.update({"exp": expire, "iat": datetime.now(timezone.utc)})
     return jwt.encode(payload, settings.jwt_secret_key, algorithm=settings.jwt_algorithm)
 
 

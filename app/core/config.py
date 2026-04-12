@@ -23,57 +23,35 @@ class Settings(BaseSettings):
     )
 
     # ── Aplicación ───────────────────────────────────────────────────
-    app_name: str = Field(default="SaaS Boilerplate")
+    app_name: str = Field(default="Farmadil System")
     app_env: str = Field(default="development")
     app_debug: bool = Field(default=True)
     app_host: str = Field(default="0.0.0.0")
     app_port: int = Field(default=8000)
 
     # ── Base de Datos ────────────────────────────────────────────────
-    direct_database_url: str | None = Field(default=None, validation_alias="DATABASE_URL")
-    postgres_user: str = Field(default="postgres")
-    postgres_password: str = Field(default="changeme")
-    postgres_db: str = Field(default="saas_db")
-    postgres_host: str = Field(default="localhost")
-    postgres_port: int = Field(default=5432)
+    database_url: str = Field(default="sqlite+aiosqlite:///./farmadil.db")
 
     @computed_field  # type: ignore[misc]
     @property
-    def database_url(self) -> str:
-        """URL async para asyncpg (uso en runtime)."""
-        import os
-        from dotenv import load_dotenv
-        load_dotenv()
-        env_url = os.getenv("DATABASE_URL")
-        if env_url:
-            if env_url.startswith("postgresql://"):
-                return env_url.replace("postgresql://", "postgresql+asyncpg://", 1)
-            elif env_url.startswith("postgres://"):
-                return env_url.replace("postgres://", "postgresql+asyncpg://", 1)
-            return env_url
-            
-        return (
-            f"postgresql+asyncpg://{self.postgres_user}:{self.postgres_password}"
-            f"@{self.postgres_host}:{self.postgres_port}/{self.postgres_db}"
-        )
+    def database_url_async(self) -> str:
+        """URL async para asyncpg/aiosqlite (uso en runtime)."""
+        if self.database_url.startswith("postgresql://"):
+            return self.database_url.replace("postgresql://", "postgresql+asyncpg://", 1)
+        elif self.database_url.startswith("postgres://"):
+            return self.database_url.replace("postgres://", "postgresql+asyncpg://", 1)
+        elif self.database_url.startswith("sqlite://"):
+            return self.database_url.replace("sqlite://", "sqlite+aiosqlite://", 1)
+        return self.database_url
 
     @computed_field  # type: ignore[misc]
     @property
     def database_url_sync(self) -> str:
         """URL síncrona para Alembic (uso en migraciones)."""
-        import os
-        env_url = os.getenv("DATABASE_URL")
-        if env_url:
-            if env_url.startswith("postgresql://"):
-                return env_url.replace("postgresql://", "postgresql+psycopg2://", 1)
-            elif env_url.startswith("postgres://"):
-                return env_url.replace("postgres://", "postgresql+psycopg2://", 1)
-            return env_url
+        if self.database_url.startswith("postgresql://") or self.database_url.startswith("postgres://"):
+            return self.database_url.replace("+asyncpg", "").replace("postgresql+psycopg2://", "postgresql://")
+        return self.database_url.replace("sqlite+aiosqlite", "sqlite")
 
-        return (
-            f"postgresql+psycopg2://{self.postgres_user}:{self.postgres_password}"
-            f"@{self.postgres_host}:{self.postgres_port}/{self.postgres_db}"
-        )
 
     # ── Redis ────────────────────────────────────────────────────────
     direct_redis_url: str | None = Field(default=None, validation_alias="REDIS_URL")

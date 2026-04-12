@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Catálogo de Inventario — Farmadil{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto py-8 px-4">
+
+    <!-- Header -->
+    <div class="mb-8 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+        <div>
+            <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">Catálogo de Inventario</h1>
+            <p class="text-gray-500 mt-1">Todos los productos registrados en el sistema.</p>
+        </div>
+        <!-- Search bar (HTMX) -->
+        <div class="relative w-full sm:w-72">
+            <div class="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+                <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+            </div>
+            <input type="text" name="q" placeholder="Filtrar productos..."
+                   class="block w-full pl-9 pr-4 py-2.5 border border-gray-200 rounded-xl text-sm bg-white shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-transparent outline-none transition-all"
+                   hx-get="/api/v1/products/catalog-grid"
+                   hx-trigger="keyup changed delay:300ms, search"
+                   hx-target="#catalog-grid"
+                   autocomplete="off">
+        </div>
+    </div>
+
+    <!-- Stats strip -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+        <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+            <p class="text-xs text-gray-500 uppercase font-semibold tracking-wide">Total Productos</p>
+            <p class="text-2xl font-black text-blue-700 mt-1">{{ total_products }}</p>
+        </div>
+        <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+            <p class="text-xs text-gray-500 uppercase font-semibold tracking-wide">Stock Crítico</p>
+            <p class="text-2xl font-black text-red-600 mt-1">{{ critical_count }}</p>
+        </div>
+        <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+            <p class="text-xs text-gray-500 uppercase font-semibold tracking-wide">Stock Normal</p>
+            <p class="text-2xl font-black text-emerald-600 mt-1">{{ ok_count }}</p>
+        </div>
+        <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+            <p class="text-xs text-gray-500 uppercase font-semibold tracking-wide">Sin Stock</p>
+            <p class="text-2xl font-black text-amber-500 mt-1">{{ zero_count }}</p>
+        </div>
+    </div>
+
+    <!-- Product Grid -->
+    <div id="catalog-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+        {{ grid_html | safe }}
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}Carga de Inventario - Farmadil{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-lg">
+    <div class="mb-8 border-b pb-4">
+        <h2 class="text-2xl font-bold text-gray-800">Carga Inicial de Inventario</h2>
+        <p class="text-gray-500 text-sm">Busca productos en el catálogo maestro para darlos de alta en tu inventario local.</p>
+    </div>
+
+    <!-- Buscador Autocomplete -->
+    <div class="mb-10 relative">
+        <label for="product-search" class="block text-sm font-semibold text-gray-700 mb-2">Buscar Medicamento (Nombre o Código)</label>
+        <div class="flex items-center">
+            <input type="text" 
+                   id="product-search" 
+                   name="q"
+                   placeholder="Ej: Acetaminofén..." 
+                   class="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-indigo-500 focus:outline-none transition-all"
+                   hx-get="/api/v1/products/search"
+                   hx-trigger="keyup changed delay:300ms"
+                   hx-target="#search-results"
+                   autocomplete="off">
+            <div class="absolute right-3 top-10 text-gray-400">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+            </div>
+        </div>
+        
+        <!-- Resultados del Autocomplete (Dropdown) -->
+        <div id="search-results" class="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-xl max-h-64 overflow-y-auto empty:hidden">
+            <!-- Los fragmentos HTML de HTMX caerán aquí -->
+        </div>
+    </div>
+
+    <!-- Formulario de Registro de Inventario -->
+    <form id="inventory-form" hx-post="/api/v1/products/" hx-swap="none" hx-on::after-request="this.reset(); alert('Producto guardado con éxito');">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Datos del Producto (Solo lectura post-selección) -->
+            <div class="col-span-2 md:col-span-1">
+                <label class="block text-sm font-medium text-gray-700">Código de Barras</label>
+                <input type="text" name="codigo_barras" id="form-codigo" required readonly
+                       class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-md text-gray-500 cursor-not-allowed">
+            </div>
+            <div class="col-span-2 md:col-span-1">
+                <label class="block text-sm font-medium text-gray-700">Nombre del Producto</label>
+                <input type="text" name="nombre" id="form-nombre" required readonly
+                       class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-md text-gray-500 cursor-not-allowed">
+            </div>
+            
+            <div class="col-span-2">
+                <label class="block text-sm font-medium text-gray-700">Categoría</label>
+                <input type="text" name="categoria" id="form-categoria" readonly
+                       class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-md text-gray-500 cursor-not-allowed">
+            </div>
+
+            <!-- Datos de Inventario (Entrada del Usuario) -->
+            <div class="col-span-2 md:col-span-1">
+                <label class="block text-sm font-medium text-gray-700">Precio Compra ($)</label>
+                <input type="number" step="0.01" name="precio_compra" id="form-p-compra" required
+                       class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+            </div>
+            <div class="col-span-2 md:col-span-1">
+                <label class="block text-sm font-medium text-gray-700">Precio Venta ($)</label>
+                <input type="number" step="0.01" name="precio_venta" id="form-p-venta" required
+                       class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+            </div>
+
+            <div class="col-span-2 md:col-span-1">
+                <label class="block text-sm font-medium text-gray-700">Stock Inicial</label>
+                <input type="number" name="stock_actual" id="form-stock" required value="0"
+                       class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+            </div>
+            <div class="col-span-2 md:col-span-1">
+                <label class="block text-sm font-medium text-gray-700">Stock Mínimo (Alerta)</label>
+                <input type="number" name="stock_minimo" id="form-stock-min" required value="5"
+                       class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+            </div>
+        </div>
+
+        <div class="mt-8 flex justify-end">
+            <button type="submit" 
+                    class="bg-indigo-600 text-white px-8 py-3 rounded-lg font-bold hover:bg-indigo-700 transition-colors shadow-lg">
+                Registrar en Inventario
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+    function selectProduct(data) {
+        document.getElementById('form-codigo').value = data.codigo;
+        document.getElementById('form-nombre').value = data.nombre;
+        document.getElementById('form-categoria').value = data.categoria;
+        
+        // Limpiar búsqueda
+        document.getElementById('product-search').value = '';
+        document.getElementById('search-results').innerHTML = '';
+        
+        // Foco en precio de compra
+        document.getElementById('form-p-compra').focus();
+    }
+
+    // Cerrar dropdown al hacer click fuera
+    document.addEventListener('click', function(e) {
+        if (!document.getElementById('product-search').contains(e.target)) {
+            document.getElementById('search-results').innerHTML = '';
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}Abastecimiento Inteligente — Farmadil{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto py-8">
+    <div class="mb-10 text-center">
+        <h1 class="text-4xl font-extrabold text-gray-900 tracking-tight">Abastecimiento Inteligente</h1>
+        <p class="text-gray-500 mt-2 text-lg">Sube la factura de tu proveedor (Excel o XML) y el sistema hará el resto.</p>
+    </div>
+
+    <!-- Zona drag & drop -->
+    <div id="upload-container"
+         class="bg-white p-8 rounded-2xl shadow-sm border-2 border-dashed border-blue-200 hover:border-blue-500 transition-colors max-w-2xl mx-auto mb-10">
+        <form hx-post="/api/v1/purchases/preview" hx-target="#preview-region" hx-swap="innerHTML"
+              hx-encoding="multipart/form-data" class="flex flex-col items-center justify-center w-full"
+              hx-on::before-request="document.getElementById('loading-indicator').classList.remove('hidden'); document.getElementById('preview-region').innerHTML='';"
+              hx-on::after-request="document.getElementById('loading-indicator').classList.add('hidden'); setTimeout(() => document.getElementById('preview-region').scrollIntoView({behavior: 'smooth'}), 150);">
+
+            <svg class="w-16 h-16 text-blue-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+            </svg>
+
+            <p class="mb-2 text-sm text-gray-500 font-medium whitespace-pre-line text-center">
+                <span class="font-bold text-blue-700">Haz clic para buscar un archivo</span> o arrástralo y suéltalo aquí.
+            </p>
+            <p class="text-xs text-gray-400 mb-6">Soporta formatos: .XLSX (Plantilla) o .XML (Facturación Electrónica UBL 2.1)</p>
+
+            <input type="file" name="file" id="file-upload" accept=".xlsx,.xml"
+                   class="block w-full text-sm text-gray-500 file:mr-4 file:py-2.5 file:px-6 file:rounded-xl file:border-0 file:text-sm file:font-bold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition-all cursor-pointer bg-white border border-gray-200 rounded-xl"
+                   required>
+
+            <div class="mt-8 flex flex-col w-full px-8">
+                <label class="text-xs font-bold text-blue-700 uppercase mb-2">Estrategia de Precios (Margen de Ganancia)</label>
+                <div class="relative w-full">
+                    <select name="margen_configurado"
+                            class="block w-full appearance-none bg-gray-50 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded-xl leading-tight focus:outline-none focus:bg-white focus:border-blue-500 font-bold transition-colors cursor-pointer text-lg">
+                        <option value="0.20">Mínima (20% sobre costo)</option>
+                        <option value="0.30">Competitiva (30% sobre costo)</option>
+                        <option value="0.40" selected>Recomendada (40% sobre costo)</option>
+                        <option value="0.50">Premium (50% sobre costo)</option>
+                        <option value="0.75">Alta Rentabilidad (75% sobre costo)</option>
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-blue-700">
+                        <svg class="fill-current h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                        </svg>
+                    </div>
+                </div>
+                <p class="text-[11px] text-gray-500 mt-2">
+                    Si eres abastecido con productos <strong>nuevos</strong> o los precios del proveedor
+                    <strong>suben</strong>, el sistema te sugerirá en la tabla de abajo a cuánto debes venderlos
+                    considerando esta estrategia.
+                </p>
+            </div>
+
+            <button type="submit"
+                    class="mt-8 w-full bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-bold py-3 px-6 rounded-xl shadow-md transition-all uppercase tracking-widest text-sm">
+                Leer e Interpretar Factura
+            </button>
+        </form>
+    </div>
+
+    <!-- Indicador de carga -->
+    <div id="loading-indicator" class="hidden my-12 flex flex-col items-center justify-center">
+        <div class="relative w-24 h-24 flex items-center justify-center">
+            <div class="absolute inset-0 rounded-full border-t-2 border-blue-600 animate-spin"></div>
+            <div class="absolute inset-2 rounded-full border-r-2 border-emerald-500 animate-spin"
+                 style="animation-direction: reverse; animation-duration: 0.7s;"></div>
+            <span class="text-xs font-black text-blue-800">IA</span>
+        </div>
+        <p class="mt-4 text-blue-700 font-bold uppercase tracking-widest text-sm animate-pulse">Procesando y Cruzando Variables...</p>
+    </div>
+
+    <!-- Región de resultados -->
+    <div id="preview-region" class="w-full">
+        <!-- El endpoint /preview inyectará aquí los resultados -->
+    </div>
+</div>
+{% endblock %}

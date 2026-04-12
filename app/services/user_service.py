@@ -4,6 +4,7 @@ app/services/user_service.py
 Lógica de negocio para gestión de usuarios.
 """
 import uuid
+from datetime import datetime, timezone
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -28,27 +29,33 @@ class UserService:
         Actualiza el perfil de un usuario.
 
         Raises:
-            ValueError: Si el nuevo username ya está en uso.
+            ValueError: Si el nuevo email ya está en uso.
         """
-        update_data: dict = {}
-
-        if data.username is not None and data.username != user.username:
-            existing = await self.repo.get_by_username(data.username)
+        if data.email is not None and data.email != user.email:
+            existing = await self.repo.get_by_email(data.email)
             if existing:
-                raise ValueError("El username ya está en uso.")
-            update_data["username"] = data.username
+                raise ValueError("El email ya está en uso por otro usuario.")
+            user.email = data.email
 
         if data.password is not None:
-            update_data["hashed_password"] = hash_password(data.password)
+            user.password_hash = hash_password(data.password)
 
-        if not update_data:
-            return user  # Sin cambios
+        # Actualizar timestamp de modificación
+        user.updated_at = datetime.now(timezone.utc)
 
-        return await self.repo.update(user, update_data)
+        self.repo.session.add(user)
+        await self.repo.session.commit()
+        await self.repo.session.refresh(user)
+        return user
 
     async def deactivate(self, user: User) -> User:
         """Desactiva una cuenta (soft delete)."""
-        return await self.repo.update(user, {"is_active": False})
+        user.is_active = False
+        user.updated_at = datetime.now(timezone.utc)
+        self.repo.session.add(user)
+        await self.repo.session.commit()
+        await self.repo.session.refresh(user)
+        return user
 
     async def list_users(self, skip: int = 0, limit: int = 100) -> list[User]:
         """Lista usuarios (solo para admins). Con paginación offset/limit."""

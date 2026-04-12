@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block title %}Ingresar Productos — Farmadil{% endblock %}
+
+{% block content %}
+<div id="main-container" class="max-w-6xl mx-auto py-8 px-4">
+    <div class="text-center mb-10">
+        <h1 class="text-4xl font-extrabold text-gray-900 mb-3 tracking-tight">Ingresar Productos</h1>
+        <p class="text-lg text-gray-500 max-w-2xl mx-auto">
+            Busca en el catálogo oficial INVIMA por nombre, laboratorio o registro sanitario.
+        </p>
+    </div>
+
+    <!-- Buscador INVIMA -->
+    <div class="max-w-3xl mx-auto mb-16">
+        <div class="relative group">
+            <!-- Icono búsqueda -->
+            <div class="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none z-10">
+                <svg class="h-5 w-5 text-blue-400 group-focus-within:text-blue-600 transition-colors"
+                     fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+            </div>
+
+            <!-- Input -->
+            <input type="text" id="catalog-search"
+                   name="q"
+                   class="w-full pl-14 pr-4 py-5 bg-white border-2 border-transparent rounded-2xl
+                          shadow-lg focus:border-blue-400 focus:ring-4 focus:ring-blue-100
+                          outline-none transition-all text-gray-700 text-lg font-medium
+                          placeholder-gray-400"
+                   placeholder="Nombre, laboratorio o registro INVIMA..."
+                   hx-get="/api/v1/catalog/search"
+                   hx-trigger="keyup changed delay:300ms, search"
+                   hx-target="#catalog-results"
+                   hx-swap="innerHTML"
+                   hx-indicator="#search-spinner"
+                   autocomplete="off">
+
+            <!-- Spinner -->
+            <div id="search-spinner"
+                 class="htmx-indicator absolute inset-y-0 right-0 pr-5 flex items-center">
+                <div class="w-5 h-5 border-2 border-blue-400 border-t-transparent rounded-full animate-spin"></div>
+            </div>
+
+            <!-- Dropdown de resultados -->
+            <div id="catalog-results"
+                 class="absolute z-50 w-full mt-2 bg-white rounded-2xl shadow-2xl
+                        border border-gray-200 max-h-[420px] overflow-y-auto empty:hidden">
+            </div>
+        </div>
+
+        <!-- Badge: estado del catálogo -->
+        <div class="mt-3 flex items-center justify-center gap-2">
+            <div id="catalog-status-badge"
+                 class="text-xs text-gray-400 flex items-center gap-1.5">
+                <div class="w-2 h-2 rounded-full bg-gray-300 animate-pulse"></div>
+                Verificando catálogo INVIMA...
+            </div>
+        </div>
+    </div>
+
+    <!-- Placeholder -->
+    <div id="results-grid" class="flex flex-col items-center justify-center p-12 text-center">
+        <div class="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center mb-4">
+            <svg class="w-10 h-10 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+        </div>
+        <p class="text-gray-400 text-base">Escribe al menos 2 caracteres para buscar</p>
+    </div>
+</div>
+
+<style>
+    .htmx-indicator { display: none; }
+    .htmx-request .htmx-indicator { display: flex; }
+    .htmx-request.htmx-indicator { display: flex; }
+</style>
+
+<script>
+// ── Cerrar dropdown al hacer click fuera ────────────────────────────
+document.addEventListener('click', function(e) {
+    const input   = document.getElementById('catalog-search');
+    const results = document.getElementById('catalog-results');
+    if (input && results && !input.contains(e.target) && !results.contains(e.target)) {
+        results.innerHTML = '';
+    }
+});
+
+// ── Selección de producto (desde presentaciones o manual) ───────────
+function selectProduct(data) {
+    // Limpiar UI
+    const el = document.getElementById('catalog-results');
+    if (el) el.innerHTML = '';
+    const input = document.getElementById('catalog-search');
+    if (input) input.value = '';
+
+    // Construir query params para el formulario
+    const params = new URLSearchParams({
+        nombre:                data.nombre               || '',
+        principio_activo:      data.principio_activo      || '',
+        registro_invima:       data.registro_invima       || '',
+        laboratorio:           data.laboratorio           || '',
+        categoria:             data.categoria             || '',
+        descripcion:           data.descripcion_comercial || '',
+    });
+
+    htmx.ajax('GET', '/api/v1/products/htmx/new-form?' + params.toString(),
+              {target: '#main-container', swap: 'innerHTML'});
+}
+
+// ── Estado del catálogo INVIMA ──────────────────────────────────────
+fetch('/api/v1/catalog/status')
+    .then(r => r.json())
+    .then(data => {
+        const badge = document.getElementById('catalog-status-badge');
+        if (data.available) {
+            badge.innerHTML = `
+                <div class="w-2 h-2 rounded-full bg-emerald-400"></div>
+                <span class="text-emerald-600 font-medium">Catálogo INVIMA activo · ${data.size_mb} MB</span>`;
+        } else {
+            badge.innerHTML = `
+                <div class="w-2 h-2 rounded-full bg-amber-400"></div>
+                <span class="text-amber-600 font-medium">Catálogo no importado — crea productos manualmente</span>`;
+        }
+    })
+    .catch(() => {
+        const badge = document.getElementById('catalog-status-badge');
+        if (badge) badge.innerHTML =
+            `<div class="w-2 h-2 rounded-full bg-red-400"></div><span class="text-red-500">Error</span>`;
+    });
+</script>
+{% endblock %}

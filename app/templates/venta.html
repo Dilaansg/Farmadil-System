@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+
+{% block title %}Punto de Venta - Farmadil{% endblock %}
+
+{% block content %}
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+
+    <!-- Lado Izquierdo: Buscador y Tabla -->
+    <div class="lg:col-span-2 space-y-6">
+
+        <!-- Header del Scanner -->
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
+            <div>
+                <h1 class="text-2xl font-extrabold text-gray-900 tracking-tight">CAJA</h1>
+                <p class="text-gray-500 text-sm mt-1">Escanea o busca un producto.</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <button type="button" onclick="openCatalogModal()"
+                    class="flex items-center gap-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 px-4 py-3 rounded-xl font-bold transition-colors">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z">
+                        </path>
+                    </svg>
+                    Catálogo
+                </button>
+            </div>
+
+            <!-- Formulario de escaneo que inyecta en la tabla global -->
+            <form id="scanner-form" hx-post="/api/v1/sales/add-item" hx-target="#cart-body" hx-swap="beforeend"
+                hx-on::after-request="this.reset(); setTimeout(() => document.getElementById('barcode-input').focus(), 50);">
+
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm14 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z">
+                            </path>
+                        </svg>
+                    </span>
+                    <input type="text" id="barcode-input" name="codigo_barras" autofocus required autocomplete="off"
+                        placeholder="Escanea el producto..."
+                        class="w-72 pl-10 pr-4 py-3 bg-gray-50 border-2 border-indigo-100 rounded-xl focus:bg-white focus:outline-none focus:ring-4 focus:ring-indigo-100 focus:border-indigo-500 font-medium transition-all shadow-inner text-gray-800">
+
+                    <!-- Incluir el totalizador al servidor -->
+                    <input type="hidden" name="current_total" hx-include="#current-total-input">
+                </div>
+            </form>
+        </div>
+
+        <div id="pos-alerts"></div>
+
+        <!-- Tabla de Carrito. ENVUELTA EN EL FORM DE CHECKOUT -->
+        <form id="checkout-form" hx-post="/api/v1/sales/checkout" hx-swap="none"
+            class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-gray-50 border-b border-gray-100">
+                        <th class="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Código</th>
+                        <th class="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Producto</th>
+                        <th class="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Precio U.</th>
+                        <th class="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Cant</th>
+                        <th class="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Subtotal</th>
+                    </tr>
+                </thead>
+                <!-- El body donde llegan las filas de HTMX -->
+                <tbody id="cart-body" class="divide-y divide-gray-100">
+                    <!-- Filas renderizadas por POST /add-item -->
+                </tbody>
+            </table>
+        </form>
+
+    </div>
+
+    <!-- Lado Derecho: Totalizador y Checkout -->
+    <div
+        class="lg:col-span-1 border-l-2 border-dashed border-gray-200 pl-8 self-stretch flex flex-col justify-between pt-6 lg:pt-0">
+        <div>
+            <!-- Totalizador OOB -->
+            <div id="total-container" class="bg-indigo-600 rounded-xl p-6 text-white shadow-lg">
+                <p class="text-indigo-200 text-sm font-bold uppercase mb-1">Total a Cobrar</p>
+                <span class="text-4xl font-extrabold tracking-tight">$0.00</span>
+                <input type="hidden" id="current-total-input" name="current_total" value="0">
+            </div>
+
+            <div class="mt-8 space-y-4">
+                <button type="button"
+                    onclick="document.getElementById('checkout-form').dispatchEvent(new Event('submit', {cancelable: true, bubbles: true}))"
+                    class="w-full bg-green-500 hover:bg-green-600 text-white font-black text-lg py-5 rounded-xl shadow-[0_4px_0_0_#166534] hover:shadow-[0_2px_0_0_#166534] hover:translate-y-[2px] transition-all uppercase tracking-widest">
+                    Confirmar Compra
+                </button>
+
+                <button type="button" onclick="if(confirm('¿Vaciar carrito?')){ window.location.reload(); }"
+                    class="w-full bg-white hover:bg-gray-50 text-red-500 border-2 border-red-100 font-bold text-base py-3 rounded-xl transition-colors">
+                    Cancelar / Vaciar
+                </button>
+            </div>
+        </div>
+
+        <!-- Info del Cajero (Estático por ahora) -->
+        <div class="mt-8 border-t border-gray-100 pt-6">
+            <div class="flex items-center space-x-3 text-sm text-gray-500">
+                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                        clip-rule="evenodd"></path>
+                </svg>
+                <span>Cajero en turno: <strong>Admin</strong></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Mantener permanentemente el foco en el input láser, a menos que el usuario explicitly esté tildando otro lado -->
+<script>
+    document.addEventListener("click", () => {
+        const input = document.getElementById('barcode-input');
+        // No robar foco si hay un modal abierto o clickeando botones
+        if (document.activeElement.tagName !== 'BUTTON' && document.getElementById('catalog-modal').classList.contains('hidden')) {
+            input.focus();
+        }
+    });
+
+    function openCatalogModal() {
+        document.getElementById('catalog-modal').classList.remove('hidden');
+        // El contenido fue cargado vía HTMX por el atributo trigger en el contenedor (o lo disparamos manual)
+        htmx.trigger('#catalog-grid', 'loadCards');
+    }
+
+    function closeCatalogModal() {
+        document.getElementById('catalog-modal').classList.add('hidden');
+        document.getElementById('barcode-input').focus();
+    }
+</script>
+
+<!-- Modal del Catálogo Visual -->
+<div id="catalog-modal"
+    class="fixed inset-0 z-50 hidden bg-gray-900 bg-opacity-50 overflow-y-auto h-full w-full backdrop-blur-sm transition-opacity"
+    aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div class="relative top-20 mx-auto p-5 border w-11/12 max-w-5xl shadow-2xl rounded-2xl bg-white mb-20">
+
+        <div class="flex justify-between items-center pb-4 border-b border-gray-100 mb-6">
+            <h3 class="text-2xl font-black text-gray-900 tracking-tight" id="modal-title">Catálogo Visual</h3>
+            <button type="button" onclick="closeCatalogModal()"
+                class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center transition-colors">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                        clip-rule="evenodd"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Layout Interno del Modal: Buscador por nombre y Grid de tarjetas -->
+        <div class="space-y-6">
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
+                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </div>
+                <input type="text"
+                    class="bg-gray-50 border-2 border-gray-100 text-gray-900 text-lg rounded-xl focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-12 p-4 transition-colors"
+                    placeholder="Filtrar catálogo rápido... (No funcional en UI de prueba)" autocomplete="off">
+            </div>
+
+            <!-- HTMX inyecta aquí desde GET /visual-catalog -->
+            <div id="catalog-grid"
+                class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 h-96 overflow-y-auto pr-2"
+                hx-get="/api/v1/sales/visual-catalog" hx-trigger="loadCards">
+                <div class="col-span-full py-12 flex justify-center items-center">
+                    <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

@@ -26,6 +26,7 @@ class ProductUpdate(BaseModel):
     categoria: Optional[str] = None
     precio_compra: Optional[Decimal] = None
     precio_venta: Optional[Decimal] = None
+    image_url: Optional[str] = None
     stock_actual: Optional[int] = None
     stock_minimo: Optional[int] = None
     unidades_por_caja: Optional[int] = None

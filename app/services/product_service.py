@@ -31,8 +31,14 @@ class ProductService:
             categoria=data.categoria,
             precio_compra=data.precio_compra,
             precio_venta=data.precio_venta,
+            image_url=data.image_url,
             stock_actual=data.stock_actual,
-            stock_minimo=data.stock_minimo
+            stock_minimo=data.stock_minimo,
+            unidades_por_caja=data.unidades_por_caja,
+            registro_invima=data.registro_invima,
+            principio_activo=data.principio_activo,
+            estado_invima=data.estado_invima,
+            laboratorio=data.laboratorio,
         )
         return await self.repo.create(product)
 
@@ -49,8 +55,14 @@ class ProductService:
         if data.categoria is not None: product.categoria = data.categoria
         if data.precio_compra is not None: product.precio_compra = data.precio_compra
         if data.precio_venta is not None: product.precio_venta = data.precio_venta
+        if data.image_url is not None: product.image_url = data.image_url
         if data.stock_actual is not None: product.stock_actual = data.stock_actual
         if data.stock_minimo is not None: product.stock_minimo = data.stock_minimo
+        if data.unidades_por_caja is not None: product.unidades_por_caja = data.unidades_por_caja
+        if data.registro_invima is not None: product.registro_invima = data.registro_invima
+        if data.principio_activo is not None: product.principio_activo = data.principio_activo
+        if data.estado_invima is not None: product.estado_invima = data.estado_invima
+        if data.laboratorio is not None: product.laboratorio = data.laboratorio
         
         return await self.repo.update(product)
 

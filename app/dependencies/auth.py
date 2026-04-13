@@ -1,6 +1,6 @@
 from typing import Annotated
 from fastapi import Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import AsyncSessionLocal
@@ -9,9 +9,9 @@ from app.models.user import User, UserRole
 from app.repositories.user_repository import UserRepository
 from app.dependencies.db import SessionDep
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/auth/login")
+bearer_scheme = HTTPBearer(auto_error=False)
 
-TokenDep = Annotated[str, Depends(oauth2_scheme)]
+TokenDep = Annotated[HTTPAuthorizationCredentials | None, Depends(bearer_scheme)]
 
 def get_user_repository(session: SessionDep) -> UserRepository:
     """Inyecta el repositorio de usuarios."""
@@ -21,17 +21,23 @@ UserRepositoryDep = Annotated[UserRepository, Depends(get_user_repository)]
 
 
 async def get_current_user(
-    token: TokenDep, 
+    token: TokenDep,
     user_repo: UserRepositoryDep
 ) -> User:
     """Extrae y valida el JWT para obtener el usuario autenticado actual."""
+    if token is None:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Not authenticated",
+        )
+
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
         headers={"WWW-Authenticate": "Bearer"},
     )
     
-    payload = decode_token(token)
+    payload = decode_token(token.credentials)
     if not payload:
         raise credentials_exception
         

@@ -52,3 +52,14 @@ python run.py
 ```
 El servidor quedará expuesto por convención en `http://localhost:8000`. 
 La documentación técnica del Backend se autogenera en `http://localhost:8000/docs`.
+
+## 🧰 Convenciones de Mantenimiento
+- Si una modificación introduce nuevas librerías de terceros, actualizar `requirements.txt` y sincronizar el entorno virtual activo.
+- Si el cambio es importante y afecta arquitectura, flujos, módulos principales o comportamiento visible, actualizar este documento para mantener la descripción del sistema al día.
+
+## ✅ Actualización Técnica (2026-04-12)
+- Se estabilizó el flujo de autenticación: `POST /api/v1/auth/login` acepta `email` y `username` (form-data).
+- El contrato de token de login ahora devuelve `access_token`, `refresh_token` y `token_type`.
+- Se reforzó la validación de contraseña (mínimo 8, máximo 72, con mayúscula, minúscula y número).
+- Se fijó compatibilidad de hashing en entorno actual con `bcrypt==4.0.1`.
+- Se alineó `ProductService` para persistir campos extendidos del producto (INVIMA, laboratorio, unidades por caja, etc.).

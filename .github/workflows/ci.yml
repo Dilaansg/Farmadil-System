@@ -1,0 +1,55 @@
+name: CI - Farmadil System
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  quality-gates:
+    runs-on: ubuntu-latest
+    name: Lint + Tests + Smoke
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install ruff
+
+      - name: Lint with ruff (check mode)
+        run: |
+          ruff check app/ --target-version py310
+        continue-on-error: false
+
+      - name: Run pytest suite
+        run: |
+          python -m pytest -q app/tests/
+        continue-on-error: false
+
+      - name: Smoke test - startup validation
+        run: |
+          timeout 5 python run.py &
+          sleep 2
+          curl -s http://localhost:8000/docs > /dev/null && echo "✓ API startup OK" || exit 1
+          pkill -f "python run.py" || true
+        continue-on-error: false
+
+      - name: Report status
+        if: success()
+        run: echo "✓ All quality gates passed"
+
+      - name: Fail CI on issues
+        if: failure()
+        run: |
+          echo "❌ Quality gates failed. Review logs above."
+          exit 1

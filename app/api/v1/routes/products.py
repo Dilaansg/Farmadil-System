@@ -4,8 +4,10 @@ from typing import List
 from fastapi import APIRouter, Depends, status, Request, HTTPException
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
+from pydantic import ValidationError
 
 from app.dependencies.db import SessionDep
+from app.core.catalog_database import search_catalog
 from app.services.product_service import ProductService
 from app.schemas.product import ProductCreate, ProductUpdate
 from app.models.product import Product
@@ -31,12 +33,13 @@ async def create_product(
     
     try:
         data = ProductCreate(**data_dict)
-    except Exception as e:
-        # Convertir error de Pydantic a algo legible para el cliente
-        from fastapi.exceptions import RequestValidationError
-        # Intentamos disparar el manejador de validación estándar si es posible,
-        # o simplemente devolvemos un error 422 claro.
-        raise HTTPException(status_code=422, detail=f"Error de validación: {str(e)}")
+    except ValidationError as e:
+        # Error específico de validación Pydantic
+        detail = "; ".join([f"{err['loc'][0]}: {err['msg']}" for err in e.errors()])
+        raise HTTPException(status_code=422, detail=detail)
+    except (TypeError, KeyError) as e:
+        # Error de estructura de datos
+        raise HTTPException(status_code=400, detail=f"Estructura de solicitud inválida: {str(e)}")
 
     return await service.create_product(data)
 
@@ -70,8 +73,13 @@ async def update_product(
 
     try:
         data = ProductUpdate(**data_dict)
-    except Exception as e:
-        raise HTTPException(status_code=422, detail=f"Error de validación: {str(e)}")
+    except ValidationError as e:
+        # Error específico de validación Pydantic
+        detail = "; ".join([f"{err['loc'][0]}: {err['msg']}" for err in e.errors()])
+        raise HTTPException(status_code=422, detail=detail)
+    except (TypeError, KeyError) as e:
+        # Error de estructura de datos
+        raise HTTPException(status_code=400, detail=f"Estructura de solicitud inválida: {str(e)}")
 
     return await service.update_product(product_id, data)
 
@@ -136,222 +144,182 @@ async def htmx_new_product_form(
     categoria: str = "",
     descripcion: str = "",
 ):
-    """
-    Formulario para crear un producto NUEVO.
-    - Si viene del catálogo INVIMA: campos pre-llenados, registro editable.
-    - Si viene de "Crear manualmente": formulario en blanco.
-    """
     import html as html_mod
+
     esc = html_mod.escape
-
-    is_from_catalog = bool(nombre and nombre.strip())
-
-    # Header visual solo si viene del catálogo
-    header_html = ""
-    if is_from_catalog:
-        header_html = f"""
-        <div class="p-5 bg-gradient-to-br from-blue-50 to-white rounded-2xl
-                    border border-blue-100 mb-6 shadow-sm">
-            <div class="text-blue-700 font-black text-[10px] uppercase tracking-widest
-                        mb-1 flex items-center gap-2">
-                {esc(laboratorio) or "Laboratorio no especificado"}
-            </div>
-            <h2 class="text-xl font-bold text-gray-900 leading-tight mb-1">
-                {esc(nombre)}
-            </h2>
-            {"<div class='text-blue-600 text-xs font-semibold bg-white px-3 py-1 rounded-lg border border-blue-100 inline-block mt-1'>📦 " + esc(descripcion) + "</div>" if descripcion else ""}
-            <div class="flex gap-2 flex-wrap mt-2">
-                {"<span class='text-[10px] font-bold text-gray-500 bg-gray-50 px-2 py-0.5 rounded border border-gray-100 uppercase'>" + esc(principio_activo) + "</span>" if principio_activo else ""}
-                {"<span class='text-[10px] text-gray-400 bg-gray-50 px-2 py-0.5 rounded border border-gray-100'>" + esc(categoria) + "</span>" if categoria else ""}
-            </div>
-        </div>
-        """
-    else:
-        header_html = """
-        <div class="p-5 bg-gradient-to-br from-emerald-50 to-white rounded-2xl
-                    border border-emerald-100 mb-6 shadow-sm text-center">
-            <div class="text-emerald-600 font-black text-xs uppercase tracking-widest mb-1">
-                Creación Manual
-            </div>
-            <p class="text-gray-500 text-sm">
-                Llena todos los campos del producto manualmente.
-            </p>
-        </div>
-        """
-
-    # Margin buttons
-    margin_buttons = ""
-    for m in [0.20, 0.30, 0.40, 0.50, 0.75]:
-        pct = int(m * 100)
-        active = "border-blue-500 bg-blue-50 text-blue-700" if m == 0.40 else "border-gray-200 text-gray-500 hover:border-blue-300"
-        check = "  ✓" if m == 0.40 else ""
-        margin_buttons += f'<button type="button" onclick="ncApplyMargin({m})" id="nc-btn-{pct}" class="nc-margin-btn px-2.5 py-1 rounded-lg text-xs font-bold border-2 {active} transition-all">{pct}%{check}</button>'
-
     html = f"""
-    <div class="max-w-2xl mx-auto bg-white p-8 rounded-3xl shadow-xl border border-gray-100 animate-fade-in">
-        <!-- Botón volver -->
-        <button class="text-gray-400 hover:text-blue-600 flex items-center font-medium
-                       transition-colors text-sm mb-6" onclick="window.location.reload()">
-            <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+    <div class="max-w-4xl mx-auto bg-white p-8 rounded-3xl shadow-xl border border-gray-100 animate-fade-in">
+        <button class="text-gray-400 hover:text-blue-600 flex items-center font-medium transition-colors text-sm mb-6" onclick="window.location.reload()">
+            <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
             Volver al buscador
         </button>
 
-        {header_html}
+        <div class="mb-5">
+            <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Buscar por nombre en INVIMA</label>
+            <input type="text" name="invima_q" placeholder="Ej: amoxicilina 500"
+                   hx-get="/api/v1/products/htmx/invima-suggest"
+                   hx-trigger="keyup changed delay:300ms"
+                   hx-target="#invima-suggest-results"
+                   class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-blue-400 outline-none transition-all text-sm">
+            <div id="invima-suggest-results" class="mt-2 border border-gray-100 rounded-xl max-h-52 overflow-y-auto"></div>
+        </div>
 
-        <!-- Formulario -->
         <form id="new-product-form"
               hx-post="/api/v1/products/"
               hx-swap="none"
-              hx-on::after-request="if(event.detail.successful){{alert('✅ Producto registrado!'); window.location.reload();}} else {{alert('❌ Error: ' + event.detail.xhr.responseText);}}"
-              class="space-y-5">
+              hx-on::after-request="if(event.detail.successful){{alert('Producto registrado'); window.location.reload();}} else {{alert('Error: ' + event.detail.xhr.responseText);}}"
+              class="space-y-4">
+            <input type="hidden" name="categoria" value="{esc(categoria)}">
 
-            <!-- Campos ocultos -->
-            <input type="hidden" name="principio_activo" value="{esc(principio_activo)}">
-            <input type="hidden" name="laboratorio"      value="{esc(laboratorio)}">
-            <input type="hidden" name="categoria"        value="{esc(categoria)}">
-
-            <!-- Fila 1: Código de barras + Nombre -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">
-                        Código de Barras *</label>
-                    <input type="text" name="codigo_barras" required
-                           placeholder="Escanea o escribe"
-                           class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl
-                                  focus:bg-white focus:ring-2 focus:ring-blue-400 outline-none
-                                  transition-all font-mono text-sm">
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">Codigo de Barras *</label>
+                    <input type="text" name="codigo_barras" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">
-                        Nombre del Producto *</label>
-                    <input type="text" name="nombre" value="{esc(nombre)}" required
-                           placeholder="Nombre comercial"
-                           class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl
-                                  focus:bg-white focus:ring-2 focus:ring-blue-400 outline-none
-                                  transition-all text-sm font-semibold">
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">Nombre *</label>
+                    <input type="text" name="nombre" value="{esc(nombre)}" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl">
                 </div>
             </div>
 
-            <!-- Fila 2: Registro INVIMA (EDITABLE) + Principio Activo -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">
-                        Registro INVIMA
-                        <span class="text-blue-500 font-normal normal-case">(editable)</span>
-                    </label>
-                    <input type="text" name="registro_invima" value="{esc(registro_invima)}"
-                           placeholder="Ej: INVIMA 2021M-0020003"
-                           class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl
-                                  focus:bg-white focus:ring-2 focus:ring-blue-400 outline-none
-                                  transition-all font-mono text-xs">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">
-                        Laboratorio</label>
-                    <input type="text" name="laboratorio" value="{esc(laboratorio)}"
-                           placeholder="Nombre del fabricante"
-                           class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl
-                                  focus:bg-white focus:ring-2 focus:ring-blue-400 outline-none
-                                  transition-all text-sm">
-                </div>
-            </div>
-
-            <!-- Fila 3: Precios -->
-            <div class="space-y-3">
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">
-                            Precio Compra ($) *</label>
-                        <input type="number" step="50" name="precio_compra" id="nc-precio-compra" required
-                               oninput="ncRecalc()"
-                               class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl
-                                      focus:bg-white focus:ring-2 focus:ring-blue-400 outline-none
-                                      transition-all font-bold">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">
-                            Precio Venta ($) *</label>
-                        <input type="number" step="50" name="precio_venta" id="nc-precio-venta" required
-                               oninput="ncClearAuto()"
-                               class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl
-                                      focus:bg-white focus:ring-2 focus:ring-blue-400 outline-none
-                                      transition-all font-bold text-blue-700">
-                    </div>
-                </div>
-                <!-- Auto-precio -->
-                <div class="flex items-center gap-2">
-                    <span class="text-xs text-gray-400 font-semibold whitespace-nowrap">Margen:</span>
-                    <div class="flex gap-1.5">{margin_buttons}</div>
-                </div>
-            </div>
-
-            <!-- Fila 4: Stock + Unidades por caja -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">
-                        Stock Inicial *</label>
-                    <input type="number" name="stock_actual" value="0" required
-                           class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl
-                                  focus:bg-white focus:ring-2 focus:ring-blue-400 outline-none transition-all">
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">Registro INVIMA *</label>
+                    <input type="text" name="registro_invima" value="{esc(registro_invima)}" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">
-                        Alerta Mínima</label>
-                    <input type="number" name="stock_minimo" value="5" required
-                           class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl
-                                  focus:bg-white focus:ring-2 focus:ring-blue-400 outline-none transition-all">
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">Marca/Laboratorio *</label>
+                    <input type="text" name="marca_laboratorio" value="{esc(laboratorio)}" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl">
+                    <input type="hidden" name="laboratorio" value="{esc(laboratorio)}">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-blue-500 uppercase tracking-wider mb-1.5">
-                        Unidades/Caja</label>
-                    <input type="number" name="unidades_por_caja" value="{_extract_units_from_desc(descripcion)}" required
-                           class="w-full px-4 py-3 bg-blue-50 border border-blue-200 rounded-xl
-                                  focus:bg-white focus:ring-2 focus:ring-blue-400 outline-none transition-all font-bold text-blue-700">
-                    <p class="text-[9px] text-gray-400 mt-1">Calculado de la descripción INVIMA</p>
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">Principio Activo</label>
+                    <input type="text" name="principio_activo" value="{esc(principio_activo)}" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl">
                 </div>
             </div>
 
-            <button type="submit"
-                    class="w-full bg-blue-600 hover:bg-blue-700 active:scale-[0.98] text-white
-                           font-bold py-4 rounded-xl shadow-lg transition-all text-base">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">Lote *</label>
+                    <input type="text" name="lote" required placeholder="Se completa manualmente" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">Fecha Vencimiento *</label>
+                    <input type="date" name="fecha_vencimiento" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">Costo Caja *</label>
+                    <input type="number" step="50" name="costo_caja" id="np-costo-caja" required oninput="npRecalc()" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl">
+                    <input type="hidden" name="precio_compra" id="np-precio-compra">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">Unidades por Caja *</label>
+                    <input type="number" name="unidades_por_caja" id="np-upc" value="{_extract_units_from_desc(descripcion)}" min="1" required oninput="npRecalc()" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">Margen %</label>
+                    <input type="number" name="np-margen" id="np-margen" value="40" min="-90" max="99" oninput="npRecalc()" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-bold text-emerald-700 uppercase tracking-wider mb-1.5">Precio Venta Unidad *</label>
+                    <input type="number" step="50" name="precio_venta_unidad" id="np-pvu" required oninput="npSyncVentaCaja()" class="w-full px-4 py-3 bg-emerald-50 border border-emerald-200 rounded-xl font-bold text-emerald-700">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-indigo-700 uppercase tracking-wider mb-1.5">Precio Venta Caja</label>
+                    <input type="number" step="50" name="precio_venta" id="np-pvc" class="w-full px-4 py-3 bg-indigo-50 border border-indigo-200 rounded-xl font-bold text-indigo-700">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">Stock Inicial *</label>
+                    <input type="number" name="stock_actual" value="0" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">Stock Minimo *</label>
+                    <input type="number" name="stock_minimo" value="5" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl">
+                </div>
+            </div>
+
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-lg transition-all">
                 Registrar en Inventario
             </button>
         </form>
     </div>
 
-    <style>
-        @keyframes fadeIn {{ from {{ opacity:0; transform:translateY(8px); }} to {{ opacity:1; transform:translateY(0); }} }}
-        .animate-fade-in {{ animation: fadeIn 0.25s ease-out forwards; }}
-    </style>
     <script>
-        let ncActiveMargin = 0.40;
-        function ncSnap(v) {{
-            if(v<1000) return Math.round(v/50)*50;
-            if(v<5000) return Math.round(v/100)*100;
-            if(v<20000) return Math.round(v/500)*500;
-            return Math.round(v/1000)*1000;
+        function npSnap(v) {{
+            if (!v || v <= 0) return 0;
+            if (v < 1000) return Math.round(v / 50) * 50;
+            if (v < 5000) return Math.round(v / 100) * 100;
+            if (v < 20000) return Math.round(v / 500) * 500;
+            return Math.round(v / 1000) * 1000;
         }}
-        function ncApplyMargin(m) {{
-            ncActiveMargin = m;
-            const c = parseFloat(document.getElementById('nc-precio-compra').value)||0;
-            if(c>0) document.getElementById('nc-precio-venta').value = ncSnap(c/(1-m));
-            document.querySelectorAll('.nc-margin-btn').forEach(b=>{{
-                b.classList.remove('border-blue-500','bg-blue-50','text-blue-700');
-                b.classList.add('border-gray-200','text-gray-500');
-                b.textContent = b.textContent.replace(' ✓','');
-            }});
-            const pct=Math.round(m*100);
-            const btn=document.getElementById('nc-btn-'+pct);
-            if(btn){{btn.classList.add('border-blue-500','bg-blue-50','text-blue-700'); btn.classList.remove('border-gray-200','text-gray-500'); btn.textContent=pct+'% ✓';}}
+        function npRecalc() {{
+            const c = parseFloat(document.getElementById('np-costo-caja').value) || 0;
+            const u = Math.max(parseInt(document.getElementById('np-upc').value) || 1, 1);
+            const m = parseFloat(document.getElementById('np-margen').value) || 40;
+            if (m >= 99) return;
+            const pvc = npSnap(c / (1 - (m/100)));
+            const pvu = npSnap(pvc / u);
+            document.getElementById('np-pvc').value = pvc;
+            document.getElementById('np-pvu').value = pvu;
+            document.getElementById('np-precio-compra').value = c;
         }}
-        function ncRecalc() {{ if(ncActiveMargin) ncApplyMargin(ncActiveMargin); }}
-        function ncClearAuto() {{ ncActiveMargin=null; document.querySelectorAll('.nc-margin-btn').forEach(b=>{{b.classList.remove('border-blue-500','bg-blue-50','text-blue-700'); b.classList.add('border-gray-200','text-gray-500'); b.textContent=b.textContent.replace(' ✓','');}}); }}
-        ncApplyMargin(0.40);
+        function npSyncVentaCaja() {{
+            const u = Math.max(parseInt(document.getElementById('np-upc').value) || 1, 1);
+            const pvu = parseFloat(document.getElementById('np-pvu').value) || 0;
+            document.getElementById('np-pvc').value = npSnap(pvu * u);
+        }}
+        function applyInvimaSuggestion(nombre, registro, laboratorio, principio) {{
+            const nameInput = document.querySelector('input[name="nombre"]');
+            const regInput = document.querySelector('input[name="registro_invima"]');
+            const labInput = document.querySelector('input[name="marca_laboratorio"]');
+            const legacyLab = document.querySelector('input[name="laboratorio"]');
+            const paInput = document.querySelector('input[name="principio_activo"]');
+            if (nameInput) nameInput.value = nombre || '';
+            if (regInput) regInput.value = registro || '';
+            if (labInput) labInput.value = laboratorio || '';
+            if (legacyLab) legacyLab.value = laboratorio || '';
+            if (paInput) paInput.value = principio || '';
+            const target = document.getElementById('invima-suggest-results');
+            if (target) target.innerHTML = '';
+        }}
+        npRecalc();
     </script>
     """
     return HTMLResponse(content=html)
+
+
+@router.get("/htmx/invima-suggest", response_class=HTMLResponse)
+async def htmx_invima_suggest(q: str = ""):
+    if not q or len(q.strip()) < 2:
+        return HTMLResponse(content="")
+
+    results = await search_catalog(q, limit=8)
+    if not results:
+        return HTMLResponse('<div class="px-3 py-2 text-xs text-gray-400">Sin sugerencias en INVIMA</div>')
+
+    items = ""
+    for r in results:
+        nombre_r = (r.get("nombre_comercial") or "").replace("'", "\\'")
+        reg_r = (r.get("registro_invima") or "").replace("'", "\\'")
+        lab_r = (r.get("titular") or "").replace("'", "\\'")
+        principio_r = (r.get("principio_activo") or "").replace("'", "\\'")
+        items += f"""
+        <button type="button" class="w-full text-left px-3 py-2 hover:bg-blue-50 border-b border-gray-100 last:border-0"
+                onclick="applyInvimaSuggestion('{nombre_r}','{reg_r}','{lab_r}','{principio_r}')">
+            <div class="text-sm font-semibold text-gray-800">{_esc(r.get('nombre_comercial', ''))}</div>
+            <div class="text-[11px] text-gray-500">{_esc(r.get('titular', ''))} · {_esc(r.get('registro_invima', ''))}</div>
+        </button>
+        """
+    return HTMLResponse(content=items)
 
 
 @router.get("/search", response_class=HTMLResponse)

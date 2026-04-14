@@ -3,7 +3,7 @@ from fastapi import HTTPException, status
 from app.models.user import User
 from app.schemas.user import UserLogin, Token
 from app.repositories.user_repository import UserRepository
-from app.core.security import verify_password, create_access_token
+from app.core.security import verify_password, create_access_token, create_refresh_token
 
 
 class AuthService:
@@ -32,5 +32,12 @@ class AuthService:
         access_token = create_access_token(
             data={"sub": str(user.id), "rol": user.rol.value}
         )
+        refresh_token = create_refresh_token(
+            data={"sub": str(user.id), "rol": user.rol.value}
+        )
         
-        return Token(access_token=access_token, token_type="bearer")
+        return Token(
+            access_token=access_token,
+            refresh_token=refresh_token,
+            token_type="bearer",
+        )

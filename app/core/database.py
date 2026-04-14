@@ -71,6 +71,11 @@ async def _migrate_product_columns() -> None:
         ("principio_activo", "TEXT"),
         ("estado_invima",    "TEXT"),
         ("laboratorio",      "TEXT"),
+        ("lote",             "TEXT NOT NULL DEFAULT 'PENDIENTE'"),
+        ("fecha_vencimiento", "TEXT NOT NULL DEFAULT '2099-12-31'"),
+        ("marca_laboratorio", "TEXT NOT NULL DEFAULT 'SIN_MARCA'"),
+        ("costo_caja",        "NUMERIC NOT NULL DEFAULT 0"),
+        ("precio_venta_unidad", "NUMERIC NOT NULL DEFAULT 0"),
     ]
     async with engine.begin() as conn:
         # Obtener columnas existentes

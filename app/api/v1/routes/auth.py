@@ -1,6 +1,6 @@
 from typing import Annotated
-from fastapi import APIRouter, Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordRequestForm
+
+from fastapi import APIRouter, Depends, Form, HTTPException, status
 
 from app.schemas.user import Token, UserPublic, UserCreate, UserLogin
 from app.services.auth_service import AuthService
@@ -20,21 +20,29 @@ AuthServiceDep = Annotated[AuthService, Depends(get_auth_service)]
 
 @router.post("/login", response_model=Token)
 async def login(
-    form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
-    auth_service: AuthServiceDep
+    auth_service: AuthServiceDep,
+    email: str | None = Form(default=None),
+    username: str | None = Form(default=None),
+    password: str = Form(...),
 ):
     """
     Endpoint para intercambiar credenciales por JWT Token.
-    Cumple con el estándar OAuth2 usando Content-Type: application/x-www-form-urlencoded
+    Acepta formularios con `email` (frontend/tests) y `username` (OAuth2).
     """
-    user_login = UserLogin(email=form_data.username, password=form_data.password)
+    raw_email = email or username
+    if not raw_email:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="email (o username) es requerido",
+        )
+
+    user_login = UserLogin(email=raw_email, password=password)
     user = await auth_service.authenticate_user(user_login)
     
     if not user:
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
+            status_code=status.HTTP_400_BAD_REQUEST,
             detail="Incorrect email or password",
-            headers={"WWW-Authenticate": "Bearer"},
         )
         
     return auth_service.create_token_for_user(user)

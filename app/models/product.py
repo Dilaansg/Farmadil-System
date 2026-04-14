@@ -1,4 +1,5 @@
 import uuid
+from datetime import date
 from decimal import Decimal
 from typing import Optional
 from sqlmodel import Field
@@ -39,14 +40,46 @@ class Product(AuditableBase, table=True):
         nullable=False,
         description="Stock mínimo requerido. Diferente por la rotación de cada producto."
     )
+
+    lote: str = Field(
+        default="PENDIENTE",
+        nullable=False,
+        description="Lote de compra más reciente del producto"
+    )
+    fecha_vencimiento: date = Field(
+        default=date(2099, 12, 31),
+        nullable=False,
+        description="Fecha de vencimiento del lote más reciente"
+    )
+    marca_laboratorio: str = Field(
+        default="SIN_MARCA",
+        nullable=False,
+        description="Marca o laboratorio principal declarado en factura/catálogo"
+    )
+    costo_caja: Decimal = Field(
+        default=0,
+        nullable=False,
+        max_digits=10,
+        decimal_places=2,
+        description="Costo de compra por caja"
+    )
     unidades_por_caja: int = Field(
         default=1,
+        nullable=False,
         description="Número de unidades (tabletas, sobres, etc.) que contiene una caja."
+    )
+    precio_venta_unidad: Decimal = Field(
+        default=0,
+        nullable=False,
+        max_digits=10,
+        decimal_places=2,
+        description="Precio de venta por unidad individual"
     )
 
     # ── Datos de referencia farmacéutica (INVIMA) ─────────────────────────────
-    registro_invima: Optional[str] = Field(
-        default=None,
+    registro_invima: str = Field(
+        default="SIN_REGISTRO",
+        nullable=False,
         index=True,
         description="Número de registro sanitario INVIMA (ej: INVIMA 2011M-0012292)"
     )

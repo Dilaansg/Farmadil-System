@@ -24,21 +24,30 @@ class ProductService:
         existing = await self.repo.get_by_codigo_barras(data.codigo_barras)
         if existing:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="El código de barras ya está registrado")
+
+        precio_compra = data.precio_compra or data.costo_caja
+        precio_venta = data.precio_venta or (data.precio_venta_unidad * data.unidades_por_caja)
+        laboratorio = data.laboratorio or data.marca_laboratorio
         
         product = Product(
             codigo_barras=data.codigo_barras,
             nombre=data.nombre,
             categoria=data.categoria,
-            precio_compra=data.precio_compra,
-            precio_venta=data.precio_venta,
+            precio_compra=precio_compra,
+            precio_venta=precio_venta,
             image_url=data.image_url,
             stock_actual=data.stock_actual,
             stock_minimo=data.stock_minimo,
+            lote=data.lote,
+            fecha_vencimiento=data.fecha_vencimiento,
+            marca_laboratorio=data.marca_laboratorio,
+            costo_caja=data.costo_caja,
             unidades_por_caja=data.unidades_por_caja,
+            precio_venta_unidad=data.precio_venta_unidad,
             registro_invima=data.registro_invima,
             principio_activo=data.principio_activo,
             estado_invima=data.estado_invima,
-            laboratorio=data.laboratorio,
+            laboratorio=laboratorio,
         )
         return await self.repo.create(product)
 
@@ -53,12 +62,30 @@ class ProductService:
             
         if data.nombre is not None: product.nombre = data.nombre
         if data.categoria is not None: product.categoria = data.categoria
+        if data.lote is not None: product.lote = data.lote
+        if data.fecha_vencimiento is not None: product.fecha_vencimiento = data.fecha_vencimiento
+        if data.marca_laboratorio is not None:
+            product.marca_laboratorio = data.marca_laboratorio
+            if data.laboratorio is None:
+                product.laboratorio = data.marca_laboratorio
+
+        if data.costo_caja is not None:
+            product.costo_caja = data.costo_caja
+            if data.precio_compra is None:
+                product.precio_compra = data.costo_caja
+
+        if data.unidades_por_caja is not None: product.unidades_por_caja = data.unidades_por_caja
+
+        if data.precio_venta_unidad is not None:
+            product.precio_venta_unidad = data.precio_venta_unidad
+            if data.precio_venta is None and product.unidades_por_caja > 0:
+                product.precio_venta = data.precio_venta_unidad * product.unidades_por_caja
+
         if data.precio_compra is not None: product.precio_compra = data.precio_compra
         if data.precio_venta is not None: product.precio_venta = data.precio_venta
         if data.image_url is not None: product.image_url = data.image_url
         if data.stock_actual is not None: product.stock_actual = data.stock_actual
         if data.stock_minimo is not None: product.stock_minimo = data.stock_minimo
-        if data.unidades_por_caja is not None: product.unidades_por_caja = data.unidades_por_caja
         if data.registro_invima is not None: product.registro_invima = data.registro_invima
         if data.principio_activo is not None: product.principio_activo = data.principio_activo
         if data.estado_invima is not None: product.estado_invima = data.estado_invima

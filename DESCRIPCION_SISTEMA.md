@@ -63,3 +63,46 @@ La documentación técnica del Backend se autogenera en `http://localhost:8000/d
 - Se reforzó la validación de contraseña (mínimo 8, máximo 72, con mayúscula, minúscula y número).
 - Se fijó compatibilidad de hashing en entorno actual con `bcrypt==4.0.1`.
 - Se alineó `ProductService` para persistir campos extendidos del producto (INVIMA, laboratorio, unidades por caja, etc.).
+
+## ✅ Actualización Técnica (2026-04-13, Fase 2-3-4)
+
+### Fase 2: Endurecimiento (Compras/Inventario)
+- **Auto-creation de productos**: `confirm_ingesta` ya no descarta items → auto-crea nuevos productos con hash de nombre
+- **Seguridad XSS**: Escapado con `html.escape()` en purchases, sales (mitigación de inyección HTML)
+- **Excepciones tipadas**: Reemplazado `except Exception` con ValidationError, XMLSyntaxError, ValueError, etc.
+- **Tests**: 22 tests passing (16 originales + 6 nuevos de regresión)
+
+### Fase 3: Calidad & Automatización
+- **CI/CD**: GitHub Actions pipeline (.github/workflows/ci.yml) con ruff, pytest, smoke test
+- **Regressions**: 6 tests nuevos para purchase auto-create, product fields persistence, POS flows
+- **Migraciones Alembic**: Versionadas (001_initial_schema, 002_add_product_batches, 003_add_replenishment_rules)
+- **Documentación**: MIGRACIONES_ALEMBIC.md (guía completa de uso futuro)
+
+### Fase 4: Evolución Funcional (Esquelétos Listos)
+- **Lotes**: Modelo ProductBatch + migración (control de vencimientos FEFO)
+- **Reposición**: Modelos ReplenishmentRule + ReplenishmentLog + migración (orden automática inteligente)
+- **Dashboard**: KPIService con cálculos de rotación, márgenes, alertas, stockouts (queries próximas)
+
+### Plan de Ejecución Completo
+Todas las grandes etapas están documentadas en `plan de ejecucion v.04.md` con roadmap 0-90 días.
+Sistema validado a nivel productividad (0 perdida de datos, 0 XSS, 0 excepciones sin tipo).
+
+## ✅ Actualización Técnica (2026-04-13, Normalización de Ingreso)
+
+- **Arquitectura de Bases de Datos Gemelas consolidada**:
+    - `farmadil.db` mantiene datos transaccionales (inventario, compras, ventas, usuarios).
+    - `catalog_reference.db` se usa como catálogo maestro INVIMA para sugerencias durante la ingesta.
+- **Producto normalizado para abastecimiento**:
+    - Se incorporan campos de captura operativa: `lote`, `fecha_vencimiento`, `marca_laboratorio`, `registro_invima`, `costo_caja`, `unidades_por_caja`, `precio_venta_unidad`.
+- **Parser DIAN mejorado**:
+    - Soporte para `AttachedDocument` con extracción del XML real desde `CDATA`.
+    - Nuevo cruce automático `match_with_invima(nombre_factura)` usando `aiosqlite` y estrategia FTS/LIKE sobre `catalog_reference.db`.
+    - Extracción heurística de laboratorio desde el texto de la línea de factura.
+- **Ingesta HTMX inteligente en compras**:
+    - Tabla de previsualización editable con `lote` y `fecha_vencimiento` por línea.
+    - Recalculo dinámico de costos/margen/precios por caja y unidad mediante partials HTMX.
+    - Confirmación compatible con flujo previo (POST directo) y flujo nuevo enriquecido.
+- **Creación manual unificada**:
+    - El formulario HTMX de alta manual usa los mismos campos críticos del flujo de factura.
+    - Sugerencias INVIMA en vivo por nombre para autocompletar nombre, registro y laboratorio.
+

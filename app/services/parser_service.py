@@ -1,10 +1,16 @@
 import io
-from lxml import etree
-import pandas as pd
 import re
+import unicodedata
+from datetime import date
 from decimal import Decimal
 from typing import List, Optional
+
+import aiosqlite
+from lxml import etree
+import pandas as pd
 from pydantic import BaseModel
+
+from app.core.catalog_database import CATALOG_DB_PATH
 
 # ── Modelos de Datos del Parser ──────────────────────────────────────
 class ParsedInvoiceDetail(BaseModel):
@@ -17,6 +23,11 @@ class ParsedInvoiceDetail(BaseModel):
     costo_anterior: Optional[Decimal] = None
     subio_costo: bool = False
     es_medicamento: bool = False
+    lote: Optional[str] = None
+    fecha_vencimiento: Optional[date] = None
+    registro_invima_sugerido: Optional[str] = None
+    principio_activo_sugerido: Optional[str] = None
+    marca_laboratorio_sugerida: Optional[str] = None
 
 class ParsedInvoice(BaseModel):
     proveedor_nombre: str
@@ -29,6 +40,48 @@ class ParserService:
     Servicio de Ingesta Inteligente de Facturas.
     Soporta parsing de Excel (.xlsx) y Archivos Electrónicos XML (UBL 2.1).
     """
+
+    @staticmethod
+    def _normalize(text: str) -> str:
+        text = unicodedata.normalize("NFKD", str(text))
+        text = "".join(c for c in text if not unicodedata.combining(c))
+        text = re.sub(r"\s+", " ", text).strip().lower()
+        return text
+
+    @staticmethod
+    def extract_brand_from_invoice_text(name: str) -> Optional[str]:
+        """Intenta extraer marca/laboratorio cuando viene como sufijo en el texto."""
+        if not name:
+            return None
+
+        # Ejemplos esperados: "ACETAMINOFEN 500MG - GENFAR", "... * MK"
+        parts = re.split(r"\s[-*]\s", name)
+        if len(parts) >= 2:
+            candidate = parts[-1].strip(" .")
+            if 2 <= len(candidate) <= 60:
+                return candidate
+
+        return None
+
+    @staticmethod
+    def _extract_embedded_invoice_xml(file_bytes: bytes) -> bytes:
+        """Soporta AttachedDocument de DIAN extrayendo el XML real en CDATA."""
+        raw = file_bytes.decode("utf-8", errors="ignore")
+        if "<AttachedDocument" not in raw:
+            return file_bytes
+
+        cdata_blocks = re.findall(r"<!\[CDATA\[(.*?)\]\]>", raw, flags=re.DOTALL | re.IGNORECASE)
+        for block in cdata_blocks:
+            candidate = block.strip()
+            if "<Invoice" in candidate or "<CreditNote" in candidate:
+                return candidate.encode("utf-8")
+
+        # Fallback: intentar extraer XML embebido sin CDATA estricto
+        invoice_match = re.search(r"(<(?:\w+:)?Invoice[\s\S]*</(?:\w+:)?Invoice>)", raw)
+        if invoice_match:
+            return invoice_match.group(1).encode("utf-8")
+
+        return file_bytes
     @staticmethod
     def is_medication(name: str) -> bool:
         """
@@ -116,8 +169,10 @@ class ParserService:
         Interpreta una Factura Electrónica en formato XML estándar UBL 2.1 
         (Universal Business Language), muy usado en facturación electrónica de LATAM.
         """
+        xml_bytes = ParserService._extract_embedded_invoice_xml(file_bytes)
+
         try:
-            tree = etree.parse(io.BytesIO(file_bytes))
+            tree = etree.parse(io.BytesIO(xml_bytes))
             root = tree.getroot()
         except etree.XMLSyntaxError:
             raise ValueError("El archivo subido no es un XML válido.")
@@ -128,37 +183,144 @@ class ParserService:
             'cbc': 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2',
         }
         
-        try:
-            # Obtener datos generales de la factura
-            numero_factura = root.xpath('.//cbc:ID/text()', namespaces=namespaces)[0]
-            
-            proveedor_party = root.find('.//cac:AccountingSupplierParty/cac:Party', namespaces=namespaces)
-            proveedor_nombre = proveedor_party.xpath('.//cac:PartyName/cbc:Name/text()', namespaces=namespaces)[0]
-            proveedor_nit = proveedor_party.xpath('.//cac:PartyIdentification/cbc:ID/text()', namespaces=namespaces)[0]
+        # Helper: intentar varias XPaths (namespaced primero, luego local-name fallback)
+        def first_text(node, exprs):
+            for expr in exprs:
+                try:
+                    res = node.xpath(expr, namespaces=namespaces)
+                except Exception:
+                    res = []
+                if res:
+                    return res[0]
+            return None
 
-            # Iterar sobre las líneas de detalle de la factura (InvoiceLine)
-            detalles = []
-            invoice_lines = root.findall('.//cac:InvoiceLine', namespaces=namespaces)
-            
-            for line in invoice_lines:
-                cantidad = line.xpath('.//cbc:InvoicedQuantity/text()', namespaces=namespaces)[0]
-                costo = line.xpath('.//cac:Price/cbc:PriceAmount/text()', namespaces=namespaces)[0]
-                nombre = line.xpath('.//cac:Item/cbc:Description/text()', namespaces=namespaces)[0]
+        # Extraer número de factura
+        numero_factura = first_text(root, ['.//cbc:ID/text()', ".//*[local-name()='ID']/text()"])
+        if not numero_factura:
+            raise ValueError("No se encontró el ID de la factura en el XML (cbc:ID).")
 
-                detalles.append(ParsedInvoiceDetail(
-                    nombre_producto=str(nombre).strip(),
-                    cantidad=int(float(cantidad)),
-                    costo_unitario=Decimal(str(costo))
-                ))
-            
-            return ParsedInvoice(
-                proveedor_nombre=proveedor_nombre,
-                proveedor_nit=proveedor_nit,
-                numero_factura=numero_factura,
-                detalles=detalles
-            )
-        except IndexError:
-            raise ValueError("El XML no cumple con el estándar esperado (UBL), faltan nodos requeridos (ID, PartyName, InvoiceLine, etc).")
+        # Proveedor (nombre y NIT) - intentar rutas namespaced y fallback por local-name
+        proveedor_nombre = first_text(root, [
+            './/cac:AccountingSupplierParty//cac:PartyName/cbc:Name/text()',
+            './/cac:Party//cac:PartyName/cbc:Name/text()',
+            ".//*[local-name()='AccountingSupplierParty']//*[local-name()='PartyName']/*[local-name()='Name']/text()",
+            ".//*[local-name()='Party']//*[local-name()='PartyName']/*[local-name()='Name']/text()",
+        ])
+        proveedor_nit = first_text(root, [
+            './/cac:AccountingSupplierParty//cac:PartyIdentification/cbc:ID/text()',
+            './/cac:Party//cac:PartyIdentification/cbc:ID/text()',
+            ".//*[local-name()='AccountingSupplierParty']//*[local-name()='PartyIdentification']/*[local-name()='ID']/text()",
+            ".//*[local-name()='Party']//*[local-name()='PartyIdentification']/*[local-name()='ID']/text()",
+        ])
+
+        if not proveedor_nombre or not proveedor_nit:
+            # Si faltan datos críticos, informar claramente
+            raise ValueError("No se encontraron datos del proveedor en el XML (PartyName o PartyIdentification).")
+
+        # Buscar líneas de factura (InvoiceLine)
+        invoice_lines = root.findall('.//cac:InvoiceLine', namespaces=namespaces)
+        if not invoice_lines:
+            invoice_lines = root.findall(".//*[local-name()='InvoiceLine']")
+
+        detalles = []
+        for line in invoice_lines:
+            cantidad = first_text(line, ['.//cbc:InvoicedQuantity/text()', ".//*[local-name()='InvoicedQuantity']/text()"])
+            costo = first_text(line, ['.//cac:Price/cbc:PriceAmount/text()', ".//*[local-name()='Price']/*[local-name()='PriceAmount']/text()", ".//*[local-name()='PriceAmount']/text()"])
+            nombre = first_text(line, ['.//cac:Item/cbc:Description/text()', ".//*[local-name()='Item']/*[local-name()='Description']/text()", ".//*[local-name()='Description']/text()"])
+
+            if not cantidad or not costo or not nombre:
+                # Saltar líneas incompletas en lugar de fallar todo el parseo
+                continue
+
+            detalles.append(ParsedInvoiceDetail(
+                nombre_producto=str(nombre).strip(),
+                cantidad=int(float(cantidad)),
+                costo_unitario=Decimal(str(costo)),
+                marca_laboratorio_sugerida=ParserService.extract_brand_from_invoice_text(str(nombre)),
+            ))
+
+        if not detalles:
+            raise ValueError("El XML no contiene líneas de detalle válidas (InvoiceLine).")
+
+        return ParsedInvoice(
+            proveedor_nombre=proveedor_nombre,
+            proveedor_nit=proveedor_nit,
+            numero_factura=numero_factura,
+            detalles=detalles
+        )
+
+    @staticmethod
+    async def match_with_invima(nombre_factura: str) -> Optional[dict]:
+        """
+        Busca coincidencias de referencia en catalog_reference.db (FTS o LIKE).
+        Retorna sugerencias para registro INVIMA, principio activo y laboratorio.
+        """
+        if not CATALOG_DB_PATH.exists() or not nombre_factura:
+            return None
+
+        norm_name = ParserService._normalize(nombre_factura)
+        if len(norm_name) < 2:
+            return None
+
+        async with aiosqlite.connect(CATALOG_DB_PATH) as db:
+            db.row_factory = aiosqlite.Row
+
+            # 1) Intento FTS5
+            try:
+                tokens = [t for t in norm_name.split() if len(t) > 1]
+                fts_query = " ".join(f"{t}*" for t in tokens[:6])
+                if fts_query:
+                    sql_fts = """
+                        SELECT
+                            rp.nombre_comercial,
+                            rp.registro_invima,
+                            rp.principio_activo,
+                            rp.titular
+                        FROM reference_fts fts
+                        JOIN reference_products rp ON rp.id = fts.rowid
+                        WHERE fts.reference_fts MATCH ?
+                        ORDER BY rank
+                        LIMIT 1
+                    """
+                    async with db.execute(sql_fts, (fts_query,)) as cur:
+                        row = await cur.fetchone()
+                        if row:
+                            return {
+                                "nombre_catalogo": row["nombre_comercial"],
+                                "registro_invima": row["registro_invima"],
+                                "principio_activo": row["principio_activo"],
+                                "marca_laboratorio": row["titular"],
+                            }
+            except Exception:
+                pass
+
+            # 2) Fallback LIKE/ILIKE-style (SQLite uses LIKE + lower)
+            like = f"%{norm_name}%"
+            sql_like = """
+                SELECT
+                    nombre_comercial,
+                    registro_invima,
+                    principio_activo,
+                    titular
+                FROM reference_products
+                WHERE
+                    LOWER(nombre_normalizado) LIKE ?
+                    OR LOWER(nombre_comercial) LIKE ?
+                    OR LOWER(principio_activo) LIKE ?
+                ORDER BY LENGTH(nombre_comercial)
+                LIMIT 1
+            """
+            async with db.execute(sql_like, (like, like, like)) as cur:
+                row = await cur.fetchone()
+                if not row:
+                    return None
+
+                return {
+                    "nombre_catalogo": row["nombre_comercial"],
+                    "registro_invima": row["registro_invima"],
+                    "principio_activo": row["principio_activo"],
+                    "marca_laboratorio": row["titular"],
+                }
 
     # ── Módulo 2: Redondeo denominaciones Colombia ──────────────────
     @staticmethod

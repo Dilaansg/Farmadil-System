@@ -1,4 +1,5 @@
 import uuid
+import html as html_module
 from decimal import Decimal
 from typing import List, Optional
 
@@ -12,6 +13,11 @@ from app.services.product_service import ProductService
 
 router = APIRouter(prefix="/sales", tags=["POS y Ventas"])
 templates = Jinja2Templates(directory="app/templates")
+
+
+def _esc(text: str) -> str:
+    """Escapa HTML para prevenir XSS en contenido dinámico."""
+    return html_module.escape(str(text)) if text else ""
 
 def get_sale_service(session: SessionDep) -> SaleService:
     return SaleService(session)
@@ -43,14 +49,14 @@ async def add_pos_item(
         # Swap OOB para mostrar una alerta temporal si no se encuentra
         return HTMLResponse(content=f"""
         <div id="pos-alerts" hx-swap-oob="true">
-            <div class="bg-red-100 text-red-700 p-3 rounded mb-4 animate-pulse">Producto no encontrado: {codigo_barras}</div>
+            <div class="bg-red-100 text-red-700 p-3 rounded mb-4 animate-pulse">Producto no encontrado: {_esc(codigo_barras)}</div>
         </div>
         """, status_code=200)
 
     if producto.stock_actual <= 0:
         return HTMLResponse(content=f"""
         <div id="pos-alerts" hx-swap-oob="true">
-            <div class="bg-orange-100 text-orange-700 p-3 rounded mb-4 animate-pulse">Sin stock: {producto.nombre}</div>
+            <div class="bg-orange-100 text-orange-700 p-3 rounded mb-4 animate-pulse">Sin stock: {_esc(producto.nombre)}</div>
         </div>
         """, status_code=200)
 
@@ -64,8 +70,8 @@ async def add_pos_item(
         <input type="hidden" name="precios" value="{producto.precio_venta}">
         <input type="hidden" name="cantidades" value="1">
         
-        <td class="p-4 text-sm text-gray-900 font-medium">{producto.codigo_barras}</td>
-        <td class="p-4 text-sm text-gray-700 font-bold">{producto.nombre}</td>
+        <td class="p-4 text-sm text-gray-900 font-medium">{_esc(producto.codigo_barras)}</td>
+        <td class="p-4 text-sm text-gray-700 font-bold">{_esc(producto.nombre)}</td>
         <td class="p-4 text-sm text-gray-500">${producto.precio_venta}</td>
         <td class="p-4 text-sm font-bold text-indigo-600">1</td>
         <td class="p-4 text-sm text-gray-900 font-bold">${producto.precio_venta}</td>

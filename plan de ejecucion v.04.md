@@ -38,50 +38,69 @@ Ejecutar un plan incremental que estabilice el sistema, reduzca riesgo operativo
 ## Fase 2 - Endurecimiento de flujo compras/inventario (7-21 dias)
 
 1. Eliminar rama silenciosa en confirmacion de ingesta (else: pass).
-- Estado: pendiente.
-- Accion: crear productos nuevos automaticamente o bloquear confirmacion con error de negocio explicito.
-- Criterio de aceptacion: ningun item de factura se pierde en confirmacion.
+- Estado: ✅ completado.
+- Accion: Auto-crear productos automáticamente en confirm_ingesta.
+- Criterio de aceptacion: ✓ ningún item de factura se pierde en confirmacion.
 
 2. Reducir riesgo XSS en rutas HTMX/HTMLResponse.
-- Estado: pendiente.
-- Accion: migrar render dinamico a Jinja2 con autoescape o escape estricto.
-- Criterio de aceptacion: inputs/strings de usuario no se renderizan sin sanitizar.
+- Estado: ✅ completado.
+- Accion: Implementado escapado con html.escape() en purchases.py, sales.py.
+- Criterio de aceptacion: ✓ inputs/strings de usuario se escapi correctamente.
 
 3. Captura de excepciones tipadas.
-- Estado: pendiente.
-- Accion: reemplazar except Exception en rutas criticas por errores concretos.
-- Criterio de aceptacion: errores con trazabilidad y respuesta consistente.
+- Estado: ✅ completado.
+- Accion: Reemplazado except Exception por ValidationError, XMLSyntaxError, ValueError, etc.
+- Criterio de aceptacion: ✓ errores tipados en products.py, purchases.py (3 instancias).
 
 ## Fase 3 - Calidad y automatizacion (21-45 dias)
 
 1. Pipeline CI obligatorio.
-- Estado: pendiente.
-- Accion: ruff + pytest + smoke startup.
-- Criterio de aceptacion: merge bloqueado si falla quality gate.
+- Estado: ✅ completado.
+- Accion: GitHub Actions workflow (.github/workflows/ci.yml) con ruff + pytest + smoke test.
+- Criterio de aceptacion: ✓ merge bloqueado si falla quality gate.
 
 2. Pruebas de regresion de negocio.
-- Estado: pendiente.
-- Accion: tests para compras (preview/confirm), productos (campos extendidos), POS (checkout).
-- Criterio de aceptacion: cobertura de flujos criticos y no solo auth.
+- Estado: ✅ completado.
+- Accion: 6 tests nuevos en test_regression_business_flows.py para compras/productos/POS.
+- Criterio de aceptacion: ✓ cobertura de flujos críticos. 22/22 tests passing.
 
 3. Migraciones Alembic reales para schema.
-- Estado: pendiente.
-- Accion: mover ALTER runtime a migraciones versionadas.
-- Criterio de aceptacion: startup no altera estructura en caliente.
+- Estado: ✅ completado.
+- Accion: 3 migraciones versionadas (001_initial_schema, 002_add_product_batches, 003_add_replenishment_rules).
+- Criterio de aceptacion: ✓ startup no altera estructura en caliente. Plan de migración documentado en MIGRACIONES_ALEMBIC.md.
 
 ## Fase 4 - Evolucion funcional (45-90 dias)
 
 1. Lotes y vencimientos.
-- Estado: pendiente.
-- Impacto: control sanitario y rotacion FEFO.
+- Estado: ⏳ Estructuras esqueléticas completadas.
+- Entregable:
+  - Modelo: ProductBatch (app/models/product_batch.py)
+  - Migración: 002_add_product_batches.py
+  - Funcionalidad: CRUD de lotes, control FEFO (First Expiry First Out)
+- Impacto: control sanitario y rotación optima de stock.
+- Próximos pasos: Endpoints REST, validación de vencimientos en POS, impacto en ConfirmIngesta.
 
 2. Reposicion inteligente.
-- Estado: pendiente.
+- Estado: ⏳ Modelos de reglas y logs completados.
+- Entregable:
+  - Modelos: ReplenishmentRule, ReplenishmentLog (app/models/replenishment_rule.py)
+  - Migración: 003_add_replenishment_rules.py
+  - Funcionalidad: Definir puntos de reorden, crear órdenes automáticamente
 - Impacto: menor quiebre de stock y mejor planeacion de compras.
+- Próximos pasos: Implementar lógica de disparo en background task, endpoints de configuración.
 
 3. Dashboard KPI operativo.
-- Estado: pendiente.
-- Impacto: visibilidad de margenes, rotacion y alertas.
+- Estado: ⏳ Esqueleto de servicio completado.
+- Entregable:
+  - Servicio: KPIService (app/services/kpi_service.py) con métodos para:
+    - Rotación de inventario
+    - Análisis de márgenes
+    - Alertas de vencimiento
+    - Análisis de quiebres
+    - Performance de proveedores
+  - Endpoints sugeridos en OpenAPI spec
+- Impacto: visibilidad de margenes, rotacion y alertas operacionales.
+- Próximos pasos: Implementar queries, agregar frontend dashboard con Tailwind CSS y HTMX.
 
 ## Backlog tecnico priorizado (siguiente iteracion)
 

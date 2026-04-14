@@ -1,0 +1,631 @@
+<?xml version="1.0" encoding="UTF-8"?><AttachedDocument xmlns='urn:oasis:names:specification:ubl:schema:xsd:AttachedDocument-2' xmlns:cac='urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2' xmlns:cbc='urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2' xmlns:ccts='urn:un:unece:uncefact:data:specification:CoreComponentTypeSchemaModule:2' xmlns:ds='http://www.w3.org/2000/09/xmldsig#' xmlns:ext='urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2' xmlns:xades='http://uri.etsi.org/01903/v1.3.2#' xmlns:xades141='http://uri.etsi.org/01903/v1.4.1#'><ext:UBLExtensions><ext:UBLExtension><ext:ExtensionContent><ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#" Id="xmldsig-d3562774090174b1fca16f86e683b6cc4b55ccfdb18f4aec3639fc49133b40a803bc4ac4bc46d39547e2a313ccf62455"><ds:SignedInfo><ds:CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"></ds:CanonicalizationMethod><ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"></ds:SignatureMethod><ds:Reference Id="xmldsig-d3562774090174b1fca16f86e683b6cc4b55ccfdb18f4aec3639fc49133b40a803bc4ac4bc46d39547e2a313ccf62455-ref0" URI=""><ds:Transforms><ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"></ds:Transform></ds:Transforms><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></ds:DigestMethod><ds:DigestValue>c38ieP68MRmZ0tLvLvNAn2TPzsvvJJNfpz+h0LJy460=</ds:DigestValue></ds:Reference><ds:Reference URI="#xmldsig-d3562774090174b1fca16f86e683b6cc4b55ccfdb18f4aec3639fc49133b40a803bc4ac4bc46d39547e2a313ccf62455-KeyInfo"><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></ds:DigestMethod><ds:DigestValue>v21hOZ/wh54ie5kg5IEXYL2MljDABbcjmUXvRZkM8ZU=</ds:DigestValue></ds:Reference><ds:Reference Type="http://uri.etsi.org/01903#SignedProperties" URI="#xmldsig-d3562774090174b1fca16f86e683b6cc4b55ccfdb18f4aec3639fc49133b40a803bc4ac4bc46d39547e2a313ccf62455-signedprops"><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></ds:DigestMethod><ds:DigestValue>GATP1+R8zOTTW1unjUaF2ZSHi6e8gKrmYYmfuTL5OjQ=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>UHs9XDaW7tWdxzRLriaZ7bDk/k3D0656bQb3p0Wm6nHr3BAsZWUTY2tp9glLpqg3fvq4rFuaKuw8gq6kkq1HdCcff8SwdNUZje+vKFz5CrvD5xOpcVYQJ4rGai99PO86iUaWDigjlXN7OoPHRk9djXeD3Cre4xuN7wb2XnTavkI6AtaLJl0ne0zLRGc98SvEjS260LCuMcQSUCbxy/thkEs8kO4IrIXehzgCjZdfA1ds7ZQFdtme4Cz2vxH0+A4Fb+3+vItAvnZgmWSXu+q3giaByS1OdBYzWm1lBJvX5aM5eyYiRqUo4MtsM24BNGxsA9hoSaSOywp36eCPV8vFtg==</ds:SignatureValue><ds:KeyInfo Id="xmldsig-d3562774090174b1fca16f86e683b6cc4b55ccfdb18f4aec3639fc49133b40a803bc4ac4bc46d39547e2a313ccf62455-KeyInfo"><ds:X509Data><ds:X509Certificate>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</ds:X509Certificate></ds:X509Data></ds:KeyInfo><ds:Object><xades:QualifyingProperties Target="#xmldsig-d3562774090174b1fca16f86e683b6cc4b55ccfdb18f4aec3639fc49133b40a803bc4ac4bc46d39547e2a313ccf62455"><xades:SignedProperties Id="xmldsig-d3562774090174b1fca16f86e683b6cc4b55ccfdb18f4aec3639fc49133b40a803bc4ac4bc46d39547e2a313ccf62455-signedprops"><xades:SignedSignatureProperties><xades:SigningTime>2026-03-07T14:19:28-05:00</xades:SigningTime><xades:SigningCertificate><xades:Cert><xades:CertDigest><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></ds:DigestMethod><ds:DigestValue>W7FDTPCs+pFa+IfDpugpLX+5dO+D73UyrCmdb83KItw=</ds:DigestValue></xades:CertDigest><xades:IssuerSerial><ds:X509IssuerName>C=CO, L=BOGOTA D.C., O=CAMERFIRMA COLOMBIA SAS, OU=Certificados Para Firma Electronica Camerfirma Colombia, serialNumber=901312112-4, CN=SUBCA CAMERFIRMA COLOMBIA SAS</ds:X509IssuerName><ds:X509SerialNumber>4379309656952748891</ds:X509SerialNumber></xades:IssuerSerial></xades:Cert></xades:SigningCertificate><xades:SignaturePolicyIdentifier><xades:SignaturePolicyId><xades:SigPolicyId><xades:Identifier>https://facturaelectronica.dian.gov.co/politicadefirma/v2/politicadefirmav2.pdf</xades:Identifier><xades:Description>Política de firma para facturas electrónicas de la República de Colombia</xades:Description></xades:SigPolicyId><xades:SigPolicyHash><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></ds:DigestMethod><ds:DigestValue>dMoMvtcG5aIzgYo0tIsSQeVJBDnUnfSOfBpxXrmor0Y=</ds:DigestValue></xades:SigPolicyHash></xades:SignaturePolicyId></xades:SignaturePolicyIdentifier><xades:SignerRole><xades:ClaimedRoles><xades:ClaimedRole>supplier</xades:ClaimedRole></xades:ClaimedRoles></xades:SignerRole></xades:SignedSignatureProperties></xades:SignedProperties></xades:QualifyingProperties></ds:Object></ds:Signature></ext:ExtensionContent></ext:UBLExtension></ext:UBLExtensions><cbc:UBLVersionID>UBL 2.1</cbc:UBLVersionID><cbc:CustomizationID>Documentos adjuntos</cbc:CustomizationID><cbc:ProfileID>Factura Electrónica de Venta</cbc:ProfileID><cbc:ProfileExecutionID>1</cbc:ProfileExecutionID><cbc:ID>PE01316</cbc:ID><cbc:IssueDate>2026-03-07</cbc:IssueDate><cbc:IssueTime>14:19:25-05:00</cbc:IssueTime><cbc:DocumentType>Contenedor de Factura Electrónica</cbc:DocumentType><cbc:ParentDocumentID>PE01316</cbc:ParentDocumentID><cac:SenderParty><cac:PartyTaxScheme><cbc:RegistrationName>DISTRIBUIDORA 4 ANGELES</cbc:RegistrationName><cbc:CompanyID schemeAgencyID='195' schemeID='9' schemeName='31'>901763879</cbc:CompanyID><cbc:TaxLevelCode>O‐47</cbc:TaxLevelCode><cac:TaxScheme><cbc:ID>01</cbc:ID><cbc:Name>IVA</cbc:Name></cac:TaxScheme></cac:PartyTaxScheme></cac:SenderParty><cac:ReceiverParty><cac:PartyTaxScheme><cbc:RegistrationName>DROGUERIA FARMADIL ANDREA</cbc:RegistrationName><cbc:CompanyID schemeAgencyID='195' schemeID='' schemeName='13'>382592211</cbc:CompanyID><cbc:TaxLevelCode>R-99-PN</cbc:TaxLevelCode><cac:TaxScheme><cbc:ID>01</cbc:ID><cbc:Name>IVA</cbc:Name></cac:TaxScheme></cac:PartyTaxScheme></cac:ReceiverParty><cac:Attachment><cac:ExternalReference><cbc:MimeCode>text/xml</cbc:MimeCode><cbc:EncodingCode>UTF-8</cbc:EncodingCode><cbc:Description><![CDATA[<Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xmlns:sts="http://www.dian.gov.co/contratos/facturaelectronica/v1/Structures" xmlns:xades="http://uri.etsi.org/01903/v1.3.2#" xmlns:xades141="http://uri.etsi.org/01903/v1.4.1#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2 http://docs.oasis-open.org/ubl/os-UBL-2.1/xsd/maindoc/UBL-Invoice-2.1.xsd"><ext:UBLExtensions><ext:UBLExtension> 
+            <ext:ExtensionContent> 
+                <sts:DianExtensions> 
+                    <sts:InvoiceControl> 
+                        <sts:InvoiceAuthorization>18764075153830</sts:InvoiceAuthorization> 
+                        <sts:AuthorizationPeriod> 
+                            <cbc:StartDate>2024-07-16</cbc:StartDate> 
+                            <cbc:EndDate>2026-07-16</cbc:EndDate> 
+                        </sts:AuthorizationPeriod> 
+                        <sts:AuthorizedInvoices> 
+                            <sts:Prefix>PE01</sts:Prefix> 
+                            <sts:From>1</sts:From> 
+                            <sts:To>10000</sts:To> 
+                        </sts:AuthorizedInvoices> 
+                    </sts:InvoiceControl> 
+                    <sts:InvoiceSource> 
+                        <cbc:IdentificationCode listAgencyID="6" listAgencyName="United Nations Economic Commission for Europe" listSchemeURI="urn:oasis:names:specification:ubl:codelist:gc:CountryIdentificationCode-2.1">CO</cbc:IdentificationCode> 
+                    </sts:InvoiceSource> 
+                    <sts:SoftwareProvider> 
+                        <sts:ProviderID schemeAgencyID="195" schemeAgencyName="CO, DIAN (Dirección de Impuestos y Aduanas Nacionales)" schemeID="0" schemeName="31">900711544</sts:ProviderID> 
+                        <sts:SoftwareID schemeAgencyID="195" schemeAgencyName="CO, DIAN (Dirección de Impuestos y Aduanas Nacionales)">feeb4367-88bb-400f-9dbb-0ee742608c3c</sts:SoftwareID> 
+                    </sts:SoftwareProvider> 
+                    <sts:SoftwareSecurityCode schemeAgencyID="195" schemeAgencyName="CO, DIAN (Dirección de Impuestos y Aduanas Nacionales)">6048937e6f97037fc24bdc4455aec60ed2e8fd9008cfb154116887975e8ba2777e084eaf32ebd99fbf60129590ac31fa</sts:SoftwareSecurityCode> 
+                    <sts:AuthorizationProvider> 
+                        <sts:AuthorizationProviderID schemeAgencyID="195" schemeAgencyName="CO, DIAN (Dirección de Impuestos y Aduanas Nacionales)" schemeID="4" schemeName="31">800197268</sts:AuthorizationProviderID> 
+                        </sts:AuthorizationProvider> 
+                        <sts:QRCode>NumFac: PE01316 FecFac: 2026-03-07 HorFac: 14:19:19-05:00 NitFac: 901763879 DocAdq: 382592211 ValFac: 1895834.19 ValIva: 8017.31 ValOtroIm: 0.00 ValTolFac: 1903851.50 CUFE: d3562774090174b1fca16f86e683b6cc4b55ccfdb18f4aec3639fc49133b40a803bc4ac4bc46d39547e2a313ccf62455 https://catalogo-vpfe.dian.gov.co/document/searchqr?documentkey=d3562774090174b1fca16f86e683b6cc4b55ccfdb18f4aec3639fc49133b40a803bc4ac4bc46d39547e2a313ccf62455</sts:QRCode> 
+                </sts:DianExtensions> 
+            </ext:ExtensionContent> 
+        </ext:UBLExtension> 
+        <ext:UBLExtension> <ext:ExtensionContent><ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#" Id="xmldsig-d3562774090174b1fca16f86e683b6cc4b55ccfdb18f4aec3639fc49133b40a803bc4ac4bc46d39547e2a313ccf62455"><ds:SignedInfo><ds:CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"></ds:CanonicalizationMethod><ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"></ds:SignatureMethod><ds:Reference Id="xmldsig-d3562774090174b1fca16f86e683b6cc4b55ccfdb18f4aec3639fc49133b40a803bc4ac4bc46d39547e2a313ccf62455-ref0" URI=""><ds:Transforms><ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"></ds:Transform></ds:Transforms><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></ds:DigestMethod><ds:DigestValue>W2r/Bt1Q9J5fZn7K8tjsPFEHabRq5boQbS1pVChbUXU=</ds:DigestValue></ds:Reference><ds:Reference URI="#xmldsig-d3562774090174b1fca16f86e683b6cc4b55ccfdb18f4aec3639fc49133b40a803bc4ac4bc46d39547e2a313ccf62455-KeyInfo"><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></ds:DigestMethod><ds:DigestValue>o5J2ne/Ncfk7Wy3WJuha4WUgTcpWFctn4WyVrvcw448=</ds:DigestValue></ds:Reference><ds:Reference Type="http://uri.etsi.org/01903#SignedProperties" URI="#xmldsig-d3562774090174b1fca16f86e683b6cc4b55ccfdb18f4aec3639fc49133b40a803bc4ac4bc46d39547e2a313ccf62455-signedprops"><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></ds:DigestMethod><ds:DigestValue>jqY6Np8MPCQRX7S95V5rxTTaPaT70IpMKXWcAxXYkOw=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>TMLZJg+aLBWiAoEd1hDmgmb2KGQs7ExyAN4of/d/hjl4dTIhsH8JQRF6V27FymxsMFYJhYGIDPZcmXOO4u5lrtPga6GRlUI6X1pa4JH8V+agsN28GZvpAdiKcmqFE7SvyI0NC+/jP/LGvETwBO6LEfIqRBOMeZ7enyzi0nq6v2/aS7mJo7xpJhQkLkU+NzFwI6GQQMfAYtwQKyh0O80HcT7wqas+wAAwdPWbo7HBD7T7pGOPum9uaKe7Pgd3Y23K+Lk15fPVx4IMCihXHZWNml5302i4ZKCEYeL+2EMZtH2Ar4y543ow8ed/YZhzbjZt71E169I3kgLHpN8lH/WOfA==</ds:SignatureValue><ds:KeyInfo Id="xmldsig-d3562774090174b1fca16f86e683b6cc4b55ccfdb18f4aec3639fc49133b40a803bc4ac4bc46d39547e2a313ccf62455-KeyInfo"><ds:X509Data><ds:X509Certificate>MIIG8jCCBdqgAwIBAgIIPMZu7jAbO1swDQYJKoZIhvcNAQELBQAwgcUxJjAkBgNVBAMMHVNVQkNBIENBTUVSRklSTUEgQ09MT01CSUEgU0FTMRQwEgYDVQQFEws5MDEzMTIxMTItNDFAMD4GA1UECww3Q2VydGlmaWNhZG9zIFBhcmEgRmlybWEgRWxlY3Ryb25pY2EgQ2FtZXJmaXJtYSBDb2xvbWJpYTEgMB4GA1UECgwXQ0FNRVJGSVJNQSBDT0xPTUJJQSBTQVMxFDASBgNVBAcMC0JPR09UQSBELkMuMQswCQYDVQQGEwJDTzAeFw0yNTEyMTYyMDM5NTNaFw0yNzEyMTYyMDM5NTJaMIG1MR0wGwYDVQQJDBRDQVJSUkVSQSA2OSBEIDIgQiA0MzETMBEGA1UEFBMKMzIwMzcwNjgxNzEWMBQGA1UEAwwNR1JVUE8gRkxBIFNBUzETMBEGA1UEBRMKOTAwNzExNTQ0MDEcMBoGA1UECwwTRmFjdHVyYSBFbGVjdHJvbmljYTEWMBQGA1UECgwNR1JVUE8gRkxBIFNBUzEPMA0GA1UECAwGQm9nb3RhMQswCQYDVQQGEwJDTzCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAI3DAxNi/kzzWC3F3OC8WLQcixw2v7SneDB9XWKCzxlft3FLd08wZEGtUpjM1r3nfXG7Ik7eCbeDJ8Ing9VJ9oWKmA4+sl2b4WMl/LAwF+I7Ld5sXGxqS1xk80+0YL4rCPlnmsxsfhiq2mzJm7307UsYZRAkSkBpureXvGpknCBU2wyvqvW/OZPto2e6VUnwZqtgbjsyPMF52Gaf3Dl/MxxbDvqNIg92DWiK3Rqe2ALifTIO+lXB6srSo06kCVyZ+b0uRGhYtbcG8a0WVM7K7nClxIBusC4KwMRbDTNgokjxx1DTO1a5qb6M2S7UgtFfcUWmOmBHxSaI5Arreu69eK8CAwEAAaOCAvIwggLuMAwGA1UdEwEB/wQCMAAwHwYDVR0jBBgwFoAUwI+fa5UZVlE1nlSYxneX/SXY9s0wWwYIKwYBBQUHAQEETzBNMEsGCCsGAQUFBzABhj9odHRwOi8vcGtpY29sLmNhbWVyZmlybWFjb2xvbWJpYS5jby9lamJjYS9wdWJsaWN3ZWIvc3RhdHVzL29jc3AwFQYDVR0RBA4wDIgKKwYBBAGBhy4eCzAnBgNVHSUEIDAeBggrBgEFBQcDAgYIKwYBBQUHAwQGCCsGAQUFBwMBMIIB7wYDVR0fAQH/BIIB4zCCAd8wggHboIIBCaCCAQWGggEBaHR0cDovL3BraWNvbC5jYW1lcmZpcm1hY29sb21iaWEuY28vZWpiY2EvcHVibGljd2ViL3dlYmRpc3QvY2VydGRpc3Q/Y21kPWNybCZpc3N1ZXI9Q04lM0RTVUJDQStDQU1FUkZJUk1BK0NPTE9NQklBK1NBUyUyQ1NOJTNEOTAxMzEyMTEyLTQlMkNPVSUzRENlcnRpZmljYWRvcytQYXJhK0Zpcm1hK0VsZWN0cm9uaWNhK0NhbWVyZmlybWErQ29sb21iaWElMkNPJTNEQ0FNRVJGSVJNQStDT0xPTUJJQStTQVMlMkNMJTNEQk9HT1RBK0QuQy4lMkNDJTNEQ0+igcukgcgwgcUxJjAkBgNVBAMMHVNVQkNBIENBTUVSRklSTUEgQ09MT01CSUEgU0FTMQswCQYDVQQGEwJDTzEUMBIGA1UEBwwLQk9HT1RBIEQuQy4xIDAeBgNVBAoMF0NBTUVSRklSTUEgQ09MT01CSUEgU0FTMUAwPgYDVQQLDDdDZXJ0aWZpY2Fkb3MgUGFyYSBGaXJtYSBFbGVjdHJvbmljYSBDYW1lcmZpcm1hIENvbG9tYmlhMRQwEgYDVQQFEws5MDEzMTIxMTItNDAdBgNVHQ4EFgQUsAANOBo2HBHH5kryKG29rGumXJkwDgYDVR0PAQH/BAQDAgXgMA0GCSqGSIb3DQEBCwUAA4IBAQBRgX0Vti8TuJhJtoTvWV0OYDIsaa/nbSBXXlliB0ehIiHITwKM3zxtlQLEaFqe2kO6ZVVcqpisokHuZ/5bQZN149z7NANiVjngHzUhOKAQVpDv/bsKicxVDvnvREW60I7acbhyJpOmyBFQL511jK8jZMr0duiVF9UThP22jgJ0PYrsjKMif+VOKfAw5izp5bIc3P5CmWPqO2+K8vJGYpyA1QXBkd6gsjgA4KmVPSoxqslduMPYUCfzBGVTHPbWfkPlCK31uSlUqGRTKPhhi5Fgkdwk5WolJ0d/19EPCAsQzKSnsPtpQ5Up9AyzGQrcu7uSZlSXUjldwwCWaj3XJJ3A</ds:X509Certificate></ds:X509Data></ds:KeyInfo><ds:Object><xades:QualifyingProperties Target="#xmldsig-d3562774090174b1fca16f86e683b6cc4b55ccfdb18f4aec3639fc49133b40a803bc4ac4bc46d39547e2a313ccf62455"><xades:SignedProperties Id="xmldsig-d3562774090174b1fca16f86e683b6cc4b55ccfdb18f4aec3639fc49133b40a803bc4ac4bc46d39547e2a313ccf62455-signedprops"><xades:SignedSignatureProperties><xades:SigningTime>2026-03-07T14:19:24-05:00</xades:SigningTime><xades:SigningCertificate><xades:Cert><xades:CertDigest><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></ds:DigestMethod><ds:DigestValue>W7FDTPCs+pFa+IfDpugpLX+5dO+D73UyrCmdb83KItw=</ds:DigestValue></xades:CertDigest><xades:IssuerSerial><ds:X509IssuerName>C=CO, L=BOGOTA D.C., O=CAMERFIRMA COLOMBIA SAS, OU=Certificados Para Firma Electronica Camerfirma Colombia, serialNumber=901312112-4, CN=SUBCA CAMERFIRMA COLOMBIA SAS</ds:X509IssuerName><ds:X509SerialNumber>4379309656952748891</ds:X509SerialNumber></xades:IssuerSerial></xades:Cert></xades:SigningCertificate><xades:SignaturePolicyIdentifier><xades:SignaturePolicyId><xades:SigPolicyId><xades:Identifier>https://facturaelectronica.dian.gov.co/politicadefirma/v2/politicadefirmav2.pdf</xades:Identifier><xades:Description>Política de firma para facturas electrónicas de la República de Colombia</xades:Description></xades:SigPolicyId><xades:SigPolicyHash><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></ds:DigestMethod><ds:DigestValue>dMoMvtcG5aIzgYo0tIsSQeVJBDnUnfSOfBpxXrmor0Y=</ds:DigestValue></xades:SigPolicyHash></xades:SignaturePolicyId></xades:SignaturePolicyIdentifier><xades:SignerRole><xades:ClaimedRoles><xades:ClaimedRole>supplier</xades:ClaimedRole></xades:ClaimedRoles></xades:SignerRole></xades:SignedSignatureProperties></xades:SignedProperties></xades:QualifyingProperties></ds:Object></ds:Signature></ext:ExtensionContent> </ext:UBLExtension></ext:UBLExtensions><cbc:UBLVersionID>UBL 2.1</cbc:UBLVersionID><cbc:CustomizationID>10</cbc:CustomizationID><cbc:ProfileID>DIAN 2.1: Factura Electrónica de Venta</cbc:ProfileID><cbc:ProfileExecutionID>1</cbc:ProfileExecutionID><cbc:ID>PE01316</cbc:ID><cbc:UUID schemeID="1" schemeName="CUFE-SHA384">d3562774090174b1fca16f86e683b6cc4b55ccfdb18f4aec3639fc49133b40a803bc4ac4bc46d39547e2a313ccf62455</cbc:UUID><cbc:IssueDate>2026-03-07</cbc:IssueDate><cbc:IssueTime>14:19:19-05:00</cbc:IssueTime><cbc:InvoiceTypeCode>01</cbc:InvoiceTypeCode><cbc:DocumentCurrencyCode listAgencyID="6" listAgencyName="United Nations Economic Commission for Europe" listID="ISO 4217 Alpha">COP</cbc:DocumentCurrencyCode> <cbc:LineCountNumeric>84</cbc:LineCountNumeric><cac:InvoicePeriod><cbc:StartDate>2026-03-01</cbc:StartDate><cbc:EndDate>2026-03-31</cbc:EndDate></cac:InvoicePeriod><cac:AccountingSupplierParty> 
+        <cbc:AdditionalAccountID>1</cbc:AdditionalAccountID> 
+        <cac:Party> 
+            <cbc:IndustryClassificationCode>4645</cbc:IndustryClassificationCode>
+            <cac:PartyName> 
+                <cbc:Name>DISTRIBUIDORA 4 ANGELES</cbc:Name> 
+            </cac:PartyName>
+            <cac:PhysicalLocation>
+                <cac:Address>
+                    <cbc:ID>11001</cbc:ID>
+                    <cbc:CityName>Bogotá, D.C.</cbc:CityName>
+                    <cbc:PostalZone>0010</cbc:PostalZone> 
+                    <cbc:CountrySubentity>Bogotá</cbc:CountrySubentity>
+                    <cbc:CountrySubentityCode>11</cbc:CountrySubentityCode>
+                    <cac:AddressLine>
+                        <cbc:Line>CARRERA 18 # 12 - 75</cbc:Line>
+                    </cac:AddressLine>
+                    <cac:Country>
+                        <cbc:IdentificationCode>CO</cbc:IdentificationCode>
+                        <cbc:Name languageID="es">Colombia</cbc:Name>
+                    </cac:Country>
+                </cac:Address>
+            </cac:PhysicalLocation> 
+            <cac:PartyTaxScheme> 
+                <cbc:RegistrationName>DISTRIBUIDORA 4 ANGELES</cbc:RegistrationName> 
+                <cbc:CompanyID schemeAgencyID="195" schemeAgencyName="CO, DIAN (Dirección de Impuestos y Aduanas Nacionales)" schemeID="9" schemeName="31">901763879</cbc:CompanyID> 
+                <cbc:TaxLevelCode>O-47</cbc:TaxLevelCode> 
+                <cac:RegistrationAddress> 
+                    <cbc:ID>11001</cbc:ID> 
+                    <cbc:CityName>Bogotá, D.C.</cbc:CityName> 
+                    <cbc:CountrySubentity>Bogotá</cbc:CountrySubentity> 
+                    <cbc:CountrySubentityCode>11</cbc:CountrySubentityCode> 
+                    <cac:AddressLine> 
+                        <cbc:Line>CARRERA 18 # 12 - 75</cbc:Line> 
+                    </cac:AddressLine> 
+                    <cac:Country> 
+                        <cbc:IdentificationCode>CO</cbc:IdentificationCode> 
+                        <cbc:Name languageID="es">Colombia</cbc:Name> 
+                    </cac:Country> 
+                </cac:RegistrationAddress> 
+                <cac:TaxScheme>
+                    <cbc:ID>01</cbc:ID><cbc:Name>IVA</cbc:Name> 
+                </cac:TaxScheme> 
+            </cac:PartyTaxScheme> 
+            <cac:PartyLegalEntity> 
+                <cbc:RegistrationName>DISTRIBUIDORA 4 ANGELES</cbc:RegistrationName> 
+                <cbc:CompanyID schemeAgencyID="195" schemeAgencyName="CO, DIAN (Dirección de Impuestos y Aduanas Nacionales)" schemeID="9" schemeName="31">901763879</cbc:CompanyID>
+                <cac:CorporateRegistrationScheme>
+                  <cbc:ID>PE01</cbc:ID>
+                </cac:CorporateRegistrationScheme> 
+            </cac:PartyLegalEntity> 
+            <cac:Contact>
+                <cbc:ElectronicMail>SERVICIOALCLIENTE@DISTRIBUIDORA4ANGELES.COM</cbc:ElectronicMail>
+            </cac:Contact>
+        </cac:Party> 
+    </cac:AccountingSupplierParty><cac:AccountingCustomerParty><cbc:AdditionalAccountID>2</cbc:AdditionalAccountID><cac:Party><cac:PartyIdentification><cbc:ID schemeName="13">382592211</cbc:ID></cac:PartyIdentification><cac:PartyName><cbc:Name>DROGUERIA FARMADIL ANDREA</cbc:Name></cac:PartyName><cac:PhysicalLocation><cac:Address><cbc:ID>11001</cbc:ID><cbc:CityName></cbc:CityName><cbc:PostalZone>110010</cbc:PostalZone><cbc:CountrySubentity></cbc:CountrySubentity><cbc:CountrySubentityCode>11</cbc:CountrySubentityCode><cac:AddressLine><cbc:Line>BOGOTÁCARRERA 89 #57 SUR-10</cbc:Line></cac:AddressLine><cac:Country><cbc:IdentificationCode>CO</cbc:IdentificationCode><cbc:Name languageID="es">COLOMBIA</cbc:Name></cac:Country></cac:Address></cac:PhysicalLocation><cac:PartyTaxScheme><cbc:RegistrationName>DROGUERIA FARMADIL ANDREA</cbc:RegistrationName><cbc:CompanyID schemeAgencyID="195" schemeAgencyName="CO, DIAN (Dirección de Impuestos y Aduanas Nacionales)" schemeID="" schemeName="13">382592211</cbc:CompanyID><cbc:TaxLevelCode>R-99-PN</cbc:TaxLevelCode><cac:TaxScheme><cbc:ID>ZZ</cbc:ID><cbc:Name>No aplica</cbc:Name></cac:TaxScheme></cac:PartyTaxScheme><cac:PartyLegalEntity><cbc:RegistrationName>DROGUERIA FARMADIL ANDREA</cbc:RegistrationName><cbc:CompanyID schemeAgencyID="195" schemeAgencyName="CO, DIAN (Dirección de Impuestos y Aduanas Nacionales)" schemeID="" schemeName="13">382592211</cbc:CompanyID></cac:PartyLegalEntity><cac:Contact><cbc:ElectronicMail>farmadil1306@gmail.com</cbc:ElectronicMail></cac:Contact></cac:Party></cac:AccountingCustomerParty><cac:PaymentMeans><cbc:ID>2</cbc:ID><cbc:PaymentMeansCode>47</cbc:PaymentMeansCode><cbc:PaymentDueDate>2026-03-27</cbc:PaymentDueDate></cac:PaymentMeans><cac:TaxTotal><cbc:TaxAmount currencyID="COP">8017.31</cbc:TaxAmount> <cbc:RoundingAmount currencyID="COP">0</cbc:RoundingAmount><cac:TaxSubtotal>
+            <cbc:TaxableAmount currencyID="COP">42196.3448</cbc:TaxableAmount> 
+            <cbc:TaxAmount currencyID="COP">8017.3055</cbc:TaxAmount> 
+            <cac:TaxCategory> 
+              <cbc:Percent>19.00</cbc:Percent>
+              <cac:TaxScheme> 
+                <cbc:ID>01</cbc:ID> 
+                <cbc:Name>IVA</cbc:Name> 
+              </cac:TaxScheme> 
+            </cac:TaxCategory> 
+          </cac:TaxSubtotal></cac:TaxTotal><cac:LegalMonetaryTotal><cbc:LineExtensionAmount currencyID="COP">1895834.19</cbc:LineExtensionAmount><cbc:TaxExclusiveAmount currencyID="COP">42196.34</cbc:TaxExclusiveAmount><cbc:TaxInclusiveAmount currencyID="COP">1903851.50</cbc:TaxInclusiveAmount><cbc:ChargeTotalAmount currencyID="COP">0</cbc:ChargeTotalAmount><cbc:PayableAmount currencyID="COP">1903851.50</cbc:PayableAmount></cac:LegalMonetaryTotal><cac:InvoiceLine><cbc:ID>1</cbc:ID><cbc:InvoicedQuantity unitCode="94">1</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">45750.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>Congestex Capsulas X 60 Unidades Novamed</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">45750.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>2</cbc:ID><cbc:InvoicedQuantity unitCode="94">2</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">44000.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>SINUTAB PLUS NS X 12 TAB</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">22000.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>3</cbc:ID><cbc:InvoicedQuantity unitCode="94">1</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">14066.6700</cbc:LineExtensionAmount><cac:Item><cbc:Description>TRACIHONG 30 ML PUNTO AZUL</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">14066.6700</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>4</cbc:ID><cbc:InvoicedQuantity unitCode="94">2</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">36000.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>PROCTORECT 30 GR</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">18000.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>5</cbc:ID><cbc:InvoicedQuantity unitCode="94">1</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">43877.3100</cbc:LineExtensionAmount><cac:Item><cbc:Description>Loratadina 10mg X 400 Tab - Laproff</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">43877.3100</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>6</cbc:ID><cbc:InvoicedQuantity unitCode="94">3</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">54000.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>Cyclofem Amp X 1 Profamilia</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">18000.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>7</cbc:ID><cbc:InvoicedQuantity unitCode="94">1</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">15000.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>KOMILON APPETIT CEREZA 360 ML</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">15000.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>8</cbc:ID><cbc:InvoicedQuantity unitCode="94">1</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">10924.3697</cbc:LineExtensionAmount><cac:TaxTotal><cbc:TaxAmount currencyID="COP">2075.6302</cbc:TaxAmount><cbc:RoundingAmount currencyID="COP">0</cbc:RoundingAmount><cac:TaxSubtotal><cbc:TaxableAmount currencyID="COP">10924.3697</cbc:TaxableAmount><cbc:TaxAmount currencyID="COP">2075.6302</cbc:TaxAmount><cac:TaxCategory><cbc:Percent>19.00</cbc:Percent><cac:TaxScheme><cbc:ID>01</cbc:ID><cbc:Name>IVA</cbc:Name></cac:TaxScheme></cac:TaxCategory></cac:TaxSubtotal></cac:TaxTotal><cac:Item><cbc:Description>Multisoluter Solución Lentes De Contacto</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">10924.3697</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>9</cbc:ID><cbc:InvoicedQuantity unitCode="94">1</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">12000.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>DAYAPETIT 240 ML MULTIVITAMINICO SABOR CARAMELO</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">12000.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>10</cbc:ID><cbc:InvoicedQuantity unitCode="94">1</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">7500.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>AMBROXOL JARABE ADULTO 120ML LAPROFF</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">7500.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>11</cbc:ID><cbc:InvoicedQuantity unitCode="94">2</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">15600.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>AMBROXOL JBE 120 ML PEDIATRICO LAPROFF</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">7800.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>12</cbc:ID><cbc:InvoicedQuantity unitCode="94">2</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">16250.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>Dihidrocodeina B 2.42 Mg/ml Jarabe - Fco X 120 Ml - Farmatech</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">8125.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>13</cbc:ID><cbc:InvoicedQuantity unitCode="94">4</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">30588.2352</cbc:LineExtensionAmount><cac:Item><cbc:Description>SUPRIFENO (IBUPROFENO) SABOR FRESA 120 ML LAPROFF</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">7647.0588</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>14</cbc:ID><cbc:InvoicedQuantity unitCode="94">2</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">11600.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>DESLORATADINA JARABE X 60ML - LAPROFF</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">5800.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>15</cbc:ID><cbc:InvoicedQuantity unitCode="94">5</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">15937.5000</cbc:LineExtensionAmount><cac:Item><cbc:Description>Clorfeniramina Jarabe 120 Ml Ecar</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">3187.5000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>16</cbc:ID><cbc:InvoicedQuantity unitCode="94">3</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">16800.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>LORATADINA JBE LAPROFF 100ML</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">5600.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>17</cbc:ID><cbc:InvoicedQuantity unitCode="94">2</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">12000.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>LORATADINA JBE 100 ML GENFAR</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">6000.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>18</cbc:ID><cbc:InvoicedQuantity unitCode="94">3</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">82270.5900</cbc:LineExtensionAmount><cac:Item><cbc:Description>VERAMIEL CHERRY 25 SOBRES X 4 PASTILLAS</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">27423.5300</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>19</cbc:ID><cbc:InvoicedQuantity unitCode="94">3</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">76500.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>Metatitane Pomada Cicatrizante Tubo X 40g Lab.remo</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">25500.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>20</cbc:ID><cbc:InvoicedQuantity unitCode="94">2</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">37000.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>Losartan 50mg + Hidroclorotiazida 12.5mg  X 30  Ecar</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">18500.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>21</cbc:ID><cbc:InvoicedQuantity unitCode="94">1</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">9500.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>IMPHOTOS (HEDERA HELIX 120 ML )</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">9500.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>22</cbc:ID><cbc:InvoicedQuantity unitCode="94">1</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">15250.5600</cbc:LineExtensionAmount><cac:Item><cbc:Description>Dolex Bebes 1/24 Gsk</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">15250.5600</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>23</cbc:ID><cbc:InvoicedQuantity unitCode="94">1</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">22826.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>Dolex Acetaminofen 7+ X 120ml - Glaxo</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">22826.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>24</cbc:ID><cbc:InvoicedQuantity unitCode="94">1</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">15384.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>ZARZAMEB ALIMENTO LIQUIDO X 240ML KEMI</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">15384.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>25</cbc:ID><cbc:InvoicedQuantity unitCode="94">3</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">24000.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>CLOTRIMAZOL CREMA VAGINAL 40 GR LAPROFF</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">8000.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>26</cbc:ID><cbc:InvoicedQuantity unitCode="94">1</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">6800.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>NOXPIRIN JUNIOR 60ML</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">6800.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>27</cbc:ID><cbc:InvoicedQuantity unitCode="94">1</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">18958.0388</cbc:LineExtensionAmount><cac:Item><cbc:Description>SULFATO DE MAGNESIO X 50 SOBRES DE 20G DISANFER</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">18958.0388</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>28</cbc:ID><cbc:InvoicedQuantity unitCode="94">6</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">39000.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>ACAMOL ( NIMESULIDA 100MG X 10 TABLETAS )</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">6500.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>29</cbc:ID><cbc:InvoicedQuantity unitCode="94">1</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">44800.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>NAPROFLASH 250 MG X 36 CAPS COLMED</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">44800.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>30</cbc:ID><cbc:InvoicedQuantity unitCode="94">3</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">36000.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>Crema Facial Calendula +vit E + Aloe 60 Gr Disanfer</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">12000.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>31</cbc:ID><cbc:InvoicedQuantity unitCode="94">1</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">11960.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>IMPOTHOS PLUS ( HEDERA HELIX + PROPOLEO ) FCO X 120 ML - IMPOFAR</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">11960.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>32</cbc:ID><cbc:InvoicedQuantity unitCode="94">1</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">13000.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>MIXAGOGO JBE GIOMER</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">13000.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>33</cbc:ID><cbc:InvoicedQuantity unitCode="94">1</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">18500.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>TRIMICORT SOLUCION TOPICA 60ML RUECAM</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">18500.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>34</cbc:ID><cbc:InvoicedQuantity unitCode="94">2</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">42164.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>Beclort 250mcg Inhal Cipla</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">21082.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>35</cbc:ID><cbc:InvoicedQuantity unitCode="94">3</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">23625.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>Salbumed 100 Mcg 200 Dosis (salbutamol) Cipla</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">7875.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>36</cbc:ID><cbc:InvoicedQuantity unitCode="94">1</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">7800.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>VERAMIEL KIDS 120ML PROFAR</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">7800.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>37</cbc:ID><cbc:InvoicedQuantity unitCode="94">2</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">16600.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>CONGESTEX KIDS JBE 90MÑ</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">8300.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>38</cbc:ID><cbc:InvoicedQuantity unitCode="94">2</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">8418.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>Ketotifeno Jarabe 20 Mg/100 Ml Jarabe Laproff</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">4209.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>39</cbc:ID><cbc:InvoicedQuantity unitCode="94">2</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">17400.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>SULFADIAZINA DE PLATA 1% CREMA TOPICA POTE X 30G MEMPHIS</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">8700.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>40</cbc:ID><cbc:InvoicedQuantity unitCode="94">4</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">18000.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>ACETAMINOFEN JARABE 120 ML LAPROFF</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">4500.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>41</cbc:ID><cbc:InvoicedQuantity unitCode="94">4</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">14800.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>ACETAMINOFEN JARABE X 90ML - LAPROFF</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">3700.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>42</cbc:ID><cbc:InvoicedQuantity unitCode="94">4</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">11200.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>ACETAMINOFEN 150MG X 60ML JARABE LAPROFF</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">2800.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>43</cbc:ID><cbc:InvoicedQuantity unitCode="94">2</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">16200.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>ZETYGRIP 4 NIÑOS JARABE 60 ML RUECAM</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">8100.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>44</cbc:ID><cbc:InvoicedQuantity unitCode="94">2</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">27400.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>FLEMOXIN SUSPENSION 250MG / 5ML SABOR DURAZNO 120 ML NOVAMED</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">13700.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>45</cbc:ID><cbc:InvoicedQuantity unitCode="94">1</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">12606.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>Orocal +d X 30 Tabletas - Laproff</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">12606.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>46</cbc:ID><cbc:InvoicedQuantity unitCode="94">1</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">15885.5600</cbc:LineExtensionAmount><cac:Item><cbc:Description>Orocal Calcio 1500 Mg X 30 Tab Laproff</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">15885.5600</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>47</cbc:ID><cbc:InvoicedQuantity unitCode="94">1</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">6408.1300</cbc:LineExtensionAmount><cac:Item><cbc:Description>Piroxicam Gel 0.5 % 40 Gr Vitalis</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">6408.1300</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>48</cbc:ID><cbc:InvoicedQuantity unitCode="94">1</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">17851.9300</cbc:LineExtensionAmount><cac:Item><cbc:Description>Ketoprofeno Gel 2.5 50 Gr - Vitalis</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">17851.9300</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>49</cbc:ID><cbc:InvoicedQuantity unitCode="94">5</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">45000.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>Post Day 0.75 Mg X 2 Tab Abbott La Francol</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">9000.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>50</cbc:ID><cbc:InvoicedQuantity unitCode="94">2</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">36000.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>IBUCOFLEX ANTISEPTICO BUCAL 120ML</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">18000.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>51</cbc:ID><cbc:InvoicedQuantity unitCode="94">6</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">28080.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>Ciprofloxacino 500 Mg X 10 Tab Ag</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">4680.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>52</cbc:ID><cbc:InvoicedQuantity unitCode="94">1</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">33563.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>Clindamicina 300 Mg X 40 Capsulas Memphis</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">33563.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>53</cbc:ID><cbc:InvoicedQuantity unitCode="94">1</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">30000.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>ZIFLUVIS 600MG ACETILCISTEINA X 30 SOBRES BIOQUIFAR</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">30000.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>54</cbc:ID><cbc:InvoicedQuantity unitCode="94">1</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">28319.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>Losartan Potasico 50mg X 300 Tab Laproff</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">28319.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>55</cbc:ID><cbc:InvoicedQuantity unitCode="94">1</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">44580.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>Metoclopramida 10 Mg  X 400 Tab Laproff</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">44580.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>56</cbc:ID><cbc:InvoicedQuantity unitCode="94">1</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">15866.6667</cbc:LineExtensionAmount><cac:Item><cbc:Description>ACTIVIT B COMPLEJO B X 30 CAPS LAB SEVERIANO</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">15866.6667</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>57</cbc:ID><cbc:InvoicedQuantity unitCode="94">1</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">40357.6500</cbc:LineExtensionAmount><cac:Item><cbc:Description>Cetirizina 10 Mg X 400 Tab Laproff</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">40357.6500</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>58</cbc:ID><cbc:InvoicedQuantity unitCode="94">1</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">49300.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>DOLORSIN FEM X 36 CAPSULAS NOVAMED</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">49300.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>59</cbc:ID><cbc:InvoicedQuantity unitCode="94">5</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">15625.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>Novoxicam 15 Mg X 10 Tab  Novofarlab</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">3125.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>60</cbc:ID><cbc:InvoicedQuantity unitCode="94">5</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">16000.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>Henoclox - Meloxicam 15 Mg Tabletas Caja X 10</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">3200.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>61</cbc:ID><cbc:InvoicedQuantity unitCode="94">4</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">28720.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>Metoprolol 50 Mg X 30 Tab Laproff</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">7180.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>62</cbc:ID><cbc:InvoicedQuantity unitCode="94">1</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">24300.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>Azitromicina 500 Mg X 30 Tab Laproff</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">24300.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>63</cbc:ID><cbc:InvoicedQuantity unitCode="94">4</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">20856.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>Impofin - Z (azitromicina 500 Mg X 3 Tab) Impofar</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">5214.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>64</cbc:ID><cbc:InvoicedQuantity unitCode="94">4</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">25716.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>Calzas Dolpack 8 Ml Solución Bucal Tópica</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">6429.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>65</cbc:ID><cbc:InvoicedQuantity unitCode="94">4</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">24000.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>Colchicina 0.5 Mg X 40 Tabletas Laproff</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">6000.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>66</cbc:ID><cbc:InvoicedQuantity unitCode="94">2</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">24000.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>carvedilol 12.5 x 30 tab genfar - generico</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">12000.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>67</cbc:ID><cbc:InvoicedQuantity unitCode="94">2</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">9000.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>VITAMINA C GOTAS 30 ML CEREZA  COASPHARMA</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">4500.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>68</cbc:ID><cbc:InvoicedQuantity unitCode="94">2</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">9000.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>CLOTRIMAZOL GOTAS 1% 30 ML LAPROFF</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">4500.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>69</cbc:ID><cbc:InvoicedQuantity unitCode="94">3</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">12801.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>Azitromicina 500mg Caja X 3 Tabletas La Sante</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">4267.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>70</cbc:ID><cbc:InvoicedQuantity unitCode="94">3</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">14700.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>Amitriptilina 25 Mg X 30 Tab Memphs</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">4900.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>71</cbc:ID><cbc:InvoicedQuantity unitCode="94">2</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">25390.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>Dolpack Kids Nenepack X 10 Ml</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">12695.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>72</cbc:ID><cbc:InvoicedQuantity unitCode="94">2</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">2000.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>APLICADORES EN BAMBOO X  20 UND - BEGUT</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">1000.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>73</cbc:ID><cbc:InvoicedQuantity unitCode="94">3</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">15000.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>Tramadol 10% X 100 Mg/ml Sol Oral X 10ml Expofarma</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">5000.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>74</cbc:ID><cbc:InvoicedQuantity unitCode="94">1</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">13750.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>Neclobet Crema 40 Gr Profma</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">13750.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>75</cbc:ID><cbc:InvoicedQuantity unitCode="94">1</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">10336.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>Terbifeet 1% Gel Tubo 20 Gr Vitalis</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">10336.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>76</cbc:ID><cbc:InvoicedQuantity unitCode="94">1</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">25000.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>MANTECA DE CACAO 12 UNI DISANFER</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">25000.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>77</cbc:ID><cbc:InvoicedQuantity unitCode="94">1</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">13300.0000</cbc:LineExtensionAmount><cac:TaxTotal><cbc:TaxAmount currencyID="COP">2527.0000</cbc:TaxAmount><cbc:RoundingAmount currencyID="COP">0</cbc:RoundingAmount><cac:TaxSubtotal><cbc:TaxableAmount currencyID="COP">13300.0000</cbc:TaxableAmount><cbc:TaxAmount currencyID="COP">2527.0000</cbc:TaxAmount><cac:TaxCategory><cbc:Percent>19.00</cbc:Percent><cac:TaxScheme><cbc:ID>01</cbc:ID><cbc:Name>IVA</cbc:Name></cac:TaxScheme></cac:TaxCategory></cac:TaxSubtotal></cac:TaxTotal><cac:Item><cbc:Description>Recolector Orina X 50 Unidades - Granada Andina</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">13300.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>78</cbc:ID><cbc:InvoicedQuantity unitCode="94">1</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">4600.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>ALGODON X 100 G HIGIETEX</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">4600.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>79</cbc:ID><cbc:InvoicedQuantity unitCode="94">2</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">9110.9376</cbc:LineExtensionAmount><cac:TaxTotal><cbc:TaxAmount currencyID="COP">1731.0782</cbc:TaxAmount><cbc:RoundingAmount currencyID="COP">0</cbc:RoundingAmount><cac:TaxSubtotal><cbc:TaxableAmount currencyID="COP">9110.9376</cbc:TaxableAmount><cbc:TaxAmount currencyID="COP">1731.0782</cbc:TaxAmount><cac:TaxCategory><cbc:Percent>19.00</cbc:Percent><cac:TaxScheme><cbc:ID>01</cbc:ID><cbc:Name>IVA</cbc:Name></cac:TaxScheme></cac:TaxCategory></cac:TaxSubtotal></cac:TaxTotal><cac:Item><cbc:Description>BIBERON DOBLE MANIJA 8OZ CORCHITO</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">4555.4688</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>80</cbc:ID><cbc:InvoicedQuantity unitCode="94">2</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">19000.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>BIBERON GLOTON CORCHITO 10 ONZAS</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">9500.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>81</cbc:ID><cbc:InvoicedQuantity unitCode="94">1</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">8861.0375</cbc:LineExtensionAmount><cac:TaxTotal><cbc:TaxAmount currencyID="COP">1683.5971</cbc:TaxAmount><cbc:RoundingAmount currencyID="COP">0</cbc:RoundingAmount><cac:TaxSubtotal><cbc:TaxableAmount currencyID="COP">8861.0375</cbc:TaxableAmount><cbc:TaxAmount currencyID="COP">1683.5971</cbc:TaxAmount><cac:TaxCategory><cbc:Percent>19.00</cbc:Percent><cac:TaxScheme><cbc:ID>01</cbc:ID><cbc:Name>IVA</cbc:Name></cac:TaxScheme></cac:TaxCategory></cac:TaxSubtotal></cac:TaxTotal><cac:Item><cbc:Description>BIBERON ANTICOLICO 8OZ - CORCHITO</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">8861.0375</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>82</cbc:ID><cbc:InvoicedQuantity unitCode="94">30</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">16500.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>ALGODON PURO 5 GRAMOS - HIGIETEX</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">550.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>83</cbc:ID><cbc:InvoicedQuantity unitCode="94">4</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">2200.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>CHUPO BLANCO #2 Y #3 CORCHITO</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">550.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine><cac:InvoiceLine><cbc:ID>84</cbc:ID><cbc:InvoicedQuantity unitCode="94">1</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="COP">25000.0000</cbc:LineExtensionAmount><cac:Item><cbc:Description>GASTRIMEB 360ML GIOMER</cbc:Description><cac:StandardItemIdentification><cbc:ID schemeAgencyID="10" schemeID="001" schemeName="UNSPSC">44120000</cbc:ID></cac:StandardItemIdentification></cac:Item> 
+        <cac:Price> 
+          <cbc:PriceAmount currencyID="COP">25000.0000</cbc:PriceAmount> 
+          <cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity> 
+        </cac:Price> 
+      </cac:InvoiceLine></Invoice>]]></cbc:Description> </cac:ExternalReference></cac:Attachment><cac:ParentDocumentLineReference><cbc:LineID>1</cbc:LineID><cac:DocumentReference><cbc:ID>PE01316</cbc:ID><cbc:UUID schemeName='CUFE-SHA384'>d3562774090174b1fca16f86e683b6cc4b55ccfdb18f4aec3639fc49133b40a803bc4ac4bc46d39547e2a313ccf62455</cbc:UUID><cbc:IssueDate>2026-03-07</cbc:IssueDate><cbc:DocumentType>ApplicationResponse</cbc:DocumentType><cac:Attachment><cac:ExternalReference><cbc:MimeCode>text/xml</cbc:MimeCode><cbc:EncodingCode>UTF-8</cbc:EncodingCode><cbc:Description><![CDATA[<?xml version="1.0" encoding="utf-8" standalone="no"?><ApplicationResponse xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xmlns:sts="dian:gov:co:facturaelectronica:Structures-2-1" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2">
+  <ext:UBLExtensions>
+    <ext:UBLExtension>
+      <ext:ExtensionContent>
+        <sts:DianExtensions>
+          <sts:InvoiceSource>
+            <cbc:IdentificationCode listAgencyID="6" listAgencyName="United Nations Economic Commission for Europe" listSchemeURI="urn:oasis:names:specification:ubl:codelist:gc:CountryIdentificationCode-2.1">CO</cbc:IdentificationCode>
+          </sts:InvoiceSource>
+          <sts:SoftwareProvider>
+            <sts:ProviderID schemeID="4" schemeName="31" schemeAgencyID="195" schemeAgencyName="CO, DIAN (Dirección de Impuestos y Aduanas Nacionales)">800197268</sts:ProviderID>
+            <sts:SoftwareID schemeAgencyID="195" schemeAgencyName="CO, DIAN (Dirección de Impuestos y Aduanas Nacionales)">...</sts:SoftwareID>
+          </sts:SoftwareProvider>
+          <sts:SoftwareSecurityCode schemeAgencyID="195" schemeAgencyName="CO, DIAN (Dirección de Impuestos y Aduanas Nacionales)">...</sts:SoftwareSecurityCode>
+          <sts:AuthorizationProvider>
+            <sts:AuthorizationProviderID schemeID="4" schemeName="31" schemeAgencyID="195" schemeAgencyName="CO, DIAN (Dirección de Impuestos y Aduanas Nacionales)">800197268</sts:AuthorizationProviderID>
+          </sts:AuthorizationProvider>
+        </sts:DianExtensions>
+      </ext:ExtensionContent>
+    </ext:UBLExtension>
+    <ext:UBLExtension>
+      <ext:ExtensionContent><ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#" Id="Signature-bb600020-53bd-4f67-881e-f405471c2bbd"><ds:SignedInfo><ds:CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" /><ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256" /><ds:Reference Id="Reference-42ad2ed2-12cd-4435-8bd2-0364f6dd0fa2" URI=""><ds:Transforms><ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /></ds:Transforms><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" /><ds:DigestValue>z0JHlWh/UZipBvYrHRk/T4z8eBFbW2C4lvocuWf6USk=</ds:DigestValue></ds:Reference><ds:Reference Id="ReferenceKeyInfo" URI="#Signature-bb600020-53bd-4f67-881e-f405471c2bbd-KeyInfo"><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" /><ds:DigestValue>mvwjREBn8VbjYd/cqBCqvQrOkxvQ6+Ig3n8V6O8VycE=</ds:DigestValue></ds:Reference><ds:Reference Type="http://uri.etsi.org/01903#SignedProperties" URI="#xmldsig-Signature-bb600020-53bd-4f67-881e-f405471c2bbd-signedprops"><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" /><ds:DigestValue>2Cm2yzmAzrg30D03btS/Apapyst7TFSXQhghBLyFDMI=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue Id="SignatureValue-bb600020-53bd-4f67-881e-f405471c2bbd">Cq1m9+n+BF8U/b8KrSugt74prq6AbzotyGMbtENJjmRrKAuO/kwqsq6R4xaUmKmi7b69khtI2AMz0zSIiRpoh9xVX4U168v/pkan0qeZTqBKWijboZlYUNcRQTk8dmSrbWbbeEPxg4IkcLFKaGEbrfhD2hYJ+f9M0zw2BTQKJsYtBnHoyz+VmWu/8q9aDjxVIY1qHLUu/M5qV3cITScbv4SDkULqfQAovRoU6EyvKWYt4C+A3/8q43QEB9uuuI1RXJFQh9+CCztkQatwPHzYh3mBQOEPuAyy2tOQIxd0+TZ/YVAd7pCCWEMaRxfuPUAOmA0CLBP2BXtsMjtB6iQtRw==</ds:SignatureValue><ds:KeyInfo Id="Signature-bb600020-53bd-4f67-881e-f405471c2bbd-KeyInfo"><ds:X509Data><ds:X509Certificate>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</ds:X509Certificate></ds:X509Data><ds:KeyValue><ds:RSAKeyValue><ds:Modulus>mHDB0j0kiTFPi1kD6jcJ/Ypwcl4m3Qg0i+s1IB9atBk89Dj0o0QHMhTNqBpVLIjp+5Szvs6glnVDAXQzeajaLKgyb1KnAaz7DvF6coN4i1VvBRSFnoI2cs8BgOdxcU/aOLQTrDUgML405AXIMLuTIqSStq5OVD/BvPZU/5sD1co4s5evZShNRv0xVLkKpR7+ACqpdbfvrIVdq8ljY7Do/OmWDSz2duJ3JXeXrSMpPJ2ITI/acOGsjs+MV5Po0p71OsQCB/b4Mpkt7d5CX8XKeyZywRkk/93hWDcBaGkn0X8dqrgYJTBdfsBHXjC+ZjOmD5w+sRzsq+6eRVAKNcpBJQ==</ds:Modulus><ds:Exponent>AQAB</ds:Exponent></ds:RSAKeyValue></ds:KeyValue></ds:KeyInfo><ds:Object Id="XadesObjectId-5d16aaa9-7dc1-4a41-acd8-50b1404a9044"><xades:QualifyingProperties xmlns:xades="http://uri.etsi.org/01903/v1.3.2#" Id="QualifyingProperties-714cb159-6f99-451b-bd5a-9e93778c05ed" Target="#Signature-bb600020-53bd-4f67-881e-f405471c2bbd"><xades:SignedProperties Id="xmldsig-Signature-bb600020-53bd-4f67-881e-f405471c2bbd-signedprops"><xades:SignedSignatureProperties><xades:SigningTime>2026-03-07T14:19:25+00:00</xades:SigningTime><xades:SigningCertificate><xades:Cert><xades:CertDigest><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" /><ds:DigestValue>/Kv9kFH+mV9JU3HrYscYDkvN9Ovhdd47L3sm5RsgcUk=</ds:DigestValue></xades:CertDigest><xades:IssuerSerial><ds:X509IssuerName>CN=OlimpiaIT ECD Sub, O=OlimpiaIT, OU=OlimpiaIT ECD, E=servicioalcliente@olimpiait.com, C=CO, S=Bogotá D.C., L=Bogotá D.C., STREET=See current address at https://micertificado.olimpiait.com, OID.2.5.4.45=900032774-4, SERIALNUMBER=900032774-4</ds:X509IssuerName><ds:X509SerialNumber>89407279672106850539243115121212403761</ds:X509SerialNumber></xades:IssuerSerial></xades:Cert></xades:SigningCertificate><xades:SignaturePolicyIdentifier><xades:SignaturePolicyId><xades:SigPolicyId><xades:Identifier>https://facturaelectronica.dian.gov.co/politicadefirma/v2/politicadefirmav2.pdf</xades:Identifier><xades:Description /></xades:SigPolicyId><xades:SigPolicyHash><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" /><ds:DigestValue>dMoMvtcG5aIzgYo0tIsSQeVJBDnUnfSOfBpxXrmor0Y=</ds:DigestValue></xades:SigPolicyHash></xades:SignaturePolicyId></xades:SignaturePolicyIdentifier><xades:SignerRole><xades:ClaimedRoles><xades:ClaimedRole>supplier</xades:ClaimedRole></xades:ClaimedRoles></xades:SignerRole></xades:SignedSignatureProperties><xades:SignedDataObjectProperties><xades:DataObjectFormat ObjectReference="#Reference-42ad2ed2-12cd-4435-8bd2-0364f6dd0fa2"><xades:MimeType>text/xml</xades:MimeType><xades:Encoding>UTF-8</xades:Encoding></xades:DataObjectFormat></xades:SignedDataObjectProperties></xades:SignedProperties></xades:QualifyingProperties></ds:Object></ds:Signature></ext:ExtensionContent>
+    </ext:UBLExtension>
+  </ext:UBLExtensions>
+  <cbc:UBLVersionID>UBL 2.1</cbc:UBLVersionID>
+  <cbc:CustomizationID>1</cbc:CustomizationID>
+  <cbc:ProfileID>DIAN 2.1</cbc:ProfileID>
+  <cbc:ProfileExecutionID>1</cbc:ProfileExecutionID>
+  <cbc:ID>4537815</cbc:ID>
+  <cbc:UUID schemeName="CUDE-SHA384">29fcf9c4b790871fe9485c84c54f69f6446f40c5bbd6cd466a478fbb6dd7f4a36013227f8d2a4e5901b72ab6877cac6e</cbc:UUID>
+  <cbc:IssueDate>2026-03-07</cbc:IssueDate>
+  <cbc:IssueTime>14:19:25-05:00</cbc:IssueTime>
+  <cac:SenderParty>
+    <cac:PartyTaxScheme>
+      <cbc:RegistrationName>Unidad Especial Dirección de Impuestos y Aduanas Nacionales</cbc:RegistrationName>
+      <cbc:CompanyID schemeID="4" schemeName="31">800197268</cbc:CompanyID>
+      <cac:TaxScheme>
+        <cbc:ID>01</cbc:ID>
+        <cbc:Name>IVA</cbc:Name>
+      </cac:TaxScheme>
+    </cac:PartyTaxScheme>
+  </cac:SenderParty>
+  <cac:ReceiverParty>
+    <cac:PartyTaxScheme>
+      <cbc:RegistrationName>DISTRIBUIDORA 4 ANGELES</cbc:RegistrationName>
+      <cbc:CompanyID schemeID="9" schemeName="31">901763879</cbc:CompanyID>
+      <cac:TaxScheme>
+        <cbc:ID>01</cbc:ID>
+        <cbc:Name>IVA</cbc:Name>
+      </cac:TaxScheme>
+    </cac:PartyTaxScheme>
+  </cac:ReceiverParty>
+  <cac:DocumentResponse>
+    <cac:Response>
+      <cbc:ResponseCode>02</cbc:ResponseCode>
+      <cbc:Description>Documento validado por la DIAN</cbc:Description>
+    </cac:Response>
+    <cac:DocumentReference>
+      <cbc:ID>PE01316</cbc:ID>
+      <cbc:UUID schemeName="CUFE-SHA384">d3562774090174b1fca16f86e683b6cc4b55ccfdb18f4aec3639fc49133b40a803bc4ac4bc46d39547e2a313ccf62455</cbc:UUID>
+    </cac:DocumentReference>
+    <cac:LineResponse>
+      <cac:LineReference>
+        <cbc:LineID>1</cbc:LineID>
+      </cac:LineReference>
+      <cac:Response>
+        <cbc:ResponseCode>0000</cbc:ResponseCode>
+        <cbc:Description>0</cbc:Description>
+      </cac:Response>
+    </cac:LineResponse>
+    <cac:LineResponse>
+      <cac:LineReference>
+        <cbc:LineID>2</cbc:LineID>
+      </cac:LineReference>
+      <cac:Response>
+        <cbc:ResponseCode>FAK57</cbc:ResponseCode>
+        <cbc:Description>Estructura de código no valida</cbc:Description>
+      </cac:Response>
+    </cac:LineResponse>
+    <cac:LineResponse>
+      <cac:LineReference>
+        <cbc:LineID>3</cbc:LineID>
+      </cac:LineReference>
+      <cac:Response>
+        <cbc:ResponseCode>FAJ73</cbc:ResponseCode>
+        <cbc:Description>Estructura código no valida</cbc:Description>
+      </cac:Response>
+    </cac:LineResponse>
+    <cac:LineResponse>
+      <cac:LineReference>
+        <cbc:LineID>4</cbc:LineID>
+      </cac:LineReference>
+      <cac:Response>
+        <cbc:ResponseCode>FAJ43b</cbc:ResponseCode>
+        <cbc:Description>Nombre informado No corresponde al registrado en el RUT con respecto al Nit suminstrado.</cbc:Description>
+      </cac:Response>
+    </cac:LineResponse>
+    <cac:LineResponse>
+      <cac:LineReference>
+        <cbc:LineID>5</cbc:LineID>
+      </cac:LineReference>
+      <cac:Response>
+        <cbc:ResponseCode>RUT01</cbc:ResponseCode>
+        <cbc:Description>La validación del estado del RUT próximamente estará disponible.</cbc:Description>
+      </cac:Response>
+    </cac:LineResponse>
+    <cac:LineResponse>
+      <cac:LineReference>
+        <cbc:LineID>6</cbc:LineID>
+      </cac:LineReference>
+      <cac:Response>
+        <cbc:ResponseCode>RUT01</cbc:ResponseCode>
+        <cbc:Description>La validación del estado del RUT próximamente estará disponible.</cbc:Description>
+      </cac:Response>
+    </cac:LineResponse>
+  </cac:DocumentResponse>
+</ApplicationResponse>]]></cbc:Description> </cac:ExternalReference></cac:Attachment><cac:ResultOfVerification><cbc:ValidatorID>Unidad Especial Dirección de Impuestos y Aduanas Nacionales</cbc:ValidatorID><cbc:ValidationResultCode>02</cbc:ValidationResultCode><cbc:ValidationDate>2026-03-07</cbc:ValidationDate><cbc:ValidationTime>14:19:24-05:00</cbc:ValidationTime></cac:ResultOfVerification></cac:DocumentReference></cac:ParentDocumentLineReference></AttachedDocument>
